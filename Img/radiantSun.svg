@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
+<path fill="none" stroke="#000000" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" d="M340,39.3
+	c-90-33.7-90,38.3-180,0"/>
+<path fill="none" stroke="#000000" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" d="M300.9,190
+	c-61.1-74.2-97.1-11.8-155.9-90"/>
+<path fill="none" stroke="#000000" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" d="M190,300.9
+	c-15.8-94.8-78.2-58.8-90-155.9"/>
+<path fill="none" stroke="#000000" stroke-width="18" stroke-linecap="round" stroke-miterlimit="10" d="M41.6,340
+	c33.7-90-38.3-90,0-180"/>
+<path d="M476,449.7c-51.8-24.1-132.3-39.6-222.8-39.6c-94.3,0-177.9,16.9-229.2,42.8C50.3,416.7,142.1,390,251.2,390
+	C357.2,390,446.8,415.2,476,449.7z"/>
+<rect x="426" y="381" width="10" height="50"/>
+<g>
+	<path fill="#FFFFFF" d="M431,384.3c-19.7,0-35.7-16-35.7-35.7c0-19.7,16-35.7,35.7-35.7s35.7,16,35.7,35.7
+		C466.7,368.3,450.7,384.3,431,384.3z"/>
+	<path d="M431,320c15.8,0,28.7,12.9,28.7,28.7c0,15.8-12.9,28.7-28.7,28.7s-28.7-12.9-28.7-28.7C402.3,332.9,415.2,320,431,320
+		 M431,306c-23.6,0-42.7,19.1-42.7,42.7c0,23.6,19.1,42.7,42.7,42.7s42.7-19.1,42.7-42.7C473.7,325.1,454.6,306,431,306L431,306z"/>
+</g>
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="250" height="250"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_2_)">
+		<path fill="#FFFFFF" d="M45.3,122.2c-42.4,0-76.8-34.5-76.8-76.8C-31.5,3,3-31.5,45.3-31.5S122.2,3,122.2,45.3
+			C122.2,87.7,87.7,122.2,45.3,122.2z"/>
+		<path d="M45.3-23c37.7,0,68.3,30.7,68.3,68.3S83,113.7,45.3,113.7C7.7,113.7-23,83-23,45.3S7.7-23,45.3-23 M45.3-40
+			C-1.8-40-40-1.8-40,45.3s38.2,85.3,85.3,85.3c47.1,0,85.3-38.2,85.3-85.3S92.5-40,45.3-40L45.3-40z"/>
+	</g>
+</g>
+</svg>

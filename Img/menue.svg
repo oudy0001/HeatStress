@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  
+
+Random Survey stuff
+One thing that would improve not just this course but the entire program would be a co-ordinated approach to the learning of Object Oriented Programming concepts which were more detailed and briefly touched on how to implement them in different platforms.  For example: both in this course and android we covered asynchronous tasks which was an excellent topic, but I think it might have been easier to discuss how asynchronous tasks work and how to implement them across different platforms. The multiple pages with multiple controllers (as known in Angular or intents in android...I forget what they are called in C#) all had mostly similarities with different platform specific implementations
+
+-->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="CircleMenue" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 210 200" enable-background="new 0 0 210 200" xml:space="preserve">
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="40" cy="50" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="170" cy="50" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="105" cy="40" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="40" cy="110" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="170" cy="110" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="105" cy="100" r="25"/>
+<circle fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" cx="105" cy="160" r="25"/>
+</svg>

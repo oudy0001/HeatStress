@@ -1,0 +1,274 @@
+script {
+  display: none; }
+
+.none {
+  display: none; }
+
+html {
+  border: none;
+  padding: none;
+  margin: none; }
+
+body {
+  height: 50%;
+  min-height: 36rem;
+  margin: 0 auto;
+  width: 24rem; }
+
+#bigDisplay {
+  clear: both; }
+
+header, footer {
+  z-index: 5;
+  background: white; }
+
+.btnOutline {
+  border-radius: 50%;
+  border: 0rem solid white;
+  box-shadow: 0px 0px 8px #444; }
+
+h1, h2 {
+  font-family: 'Cinzel', serif;
+  color: #111111;
+  text-align: center; }
+
+p, h3 {
+  font-family: 'Poiret One', cursive;
+  color: #111111;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0rem; }
+
+#numberPad {
+  margin: 6rem;
+  clear: both; }
+
+#numberPad button {
+  font-family: 'Poiret One', cursive;
+  color: #111111;
+  background: none;
+  margin: 0.3rem;
+  height: 3rem;
+  width: 3rem; }
+
+header {
+  position: fixed;
+  top: 0;
+  height: 5rem;
+  max-width: 24rem;
+  margin: 0 auto; }
+
+#homeButton {
+  top: 0;
+  left: 0;
+  width: 4rem; }
+
+#OHCOWwrapper {
+  max-width: 24rem;
+  margin: 0 auto;
+  width: 24rem;
+  margin-top: 5rem;
+  margin-bottom: 8.25rem; }
+
+#title {
+  width: 16rem;
+  height: 5rem;
+  padding: 0;
+  margin: 0;
+  float: left;
+  text-align: center; }
+
+#botBtnDiv {
+  position: fixed;
+  bottom: 4rem; }
+
+#resetBtn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-family: 'Poiret One', cursive;
+  color: #111111;
+  background: none;
+  height: 2rem;
+  width: 2rem;
+  background-image: url(../Img/refresh-13.svg); }
+
+#tempFeedback, #humidFeedback {
+  width: 2rem;
+  height: 1rem; }
+
+#feedbackText {
+  background: white;
+  position: fixed;
+  bottom: 0;
+  width: 24rem;
+  padding-top: .5rem;
+  padding-left: .5rem;
+  height: 1.5rem;
+  border: 0.15rem solid #ccc;
+  border-radius: 2rem;
+  margin-bottom: .5rem; }
+
+#OHCOWIconHolder {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  margin: 1rem;
+  margin-left: 4rem;
+  float: left; }
+
+#OHCOWIcon {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/ohcow%20temp%20icon.svg);
+  background-repeat: no-repeat; }
+
+#shadeBoxFooter {
+  box-shadow: 0px -3px 3px #999;
+  width: 24rem;
+  margin: 0 auto;
+  border: 1px solid white; }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  margin: 0 auto;
+  background: white;
+  width: 24rem;
+  height: 8rem; }
+
+button {
+  border: 0rem solid white;
+  background-repeat: no-repeat; }
+
+#bigHumidexDiv {
+  width: 4rem;
+  float: left; }
+
+#bigInstructionsDiv {
+  width: 17.5rem;
+  float: right; }
+
+.notice {
+  position: relative;
+  height: 1.5rem;
+  width: 1.5rem;
+  float: right; }
+
+#newEntry {
+  background: none;
+  background-image: url(../Img/add-12.svg);
+  height: 1.3rem;
+  width: 1.3rem;
+  margin: .2rem;
+  margin-left: .5rem; }
+
+#repeatingList {
+  width: 100%;
+  float: left;
+  margin-top: .5rem; }
+
+.repeatingListItem {
+  width: 24rem; }
+
+.repBackground {
+  margin: 0;
+  padding: 1.5rem;
+  float: left; }
+
+.repRight p {
+  padding: .5rem; }
+
+.repRight .notice {
+  position: relative;
+  bottom: 0;
+  margin: 0;
+  padding: 0; }
+
+#botBtnDiv div {
+  margin-left: 2rem;
+  float: left;
+  background: white;
+  height: 3rem;
+  width: 3rem; }
+
+#radiantLevel {
+  font-family: 'Poiret One', cursive;
+  color: #111111; }
+
+#clothingLevel {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/clothing.svg);
+  background-repeat: no-repeat;
+  font-family: 'Poiret One', cursive;
+  color: white; }
+
+#humidexFeedback {
+  padding: 2rem;
+  text-align: left;
+  width: 2rem; }
+
+.level1 {
+  background-image: url(../Img/1.svg);
+  background-repeat: no-repeat; }
+
+.level2 {
+  background-image: url(../Img/2.svg);
+  background-repeat: no-repeat; }
+
+.level3 {
+  background-image: url(../Img/3.svg);
+  background-repeat: no-repeat; }
+
+.level4 {
+  background-image: url(../Img/4.svg);
+  background-repeat: no-repeat; }
+
+.indoor {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/indoor.svg); }
+
+.radiantNone {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/no%20indoor%20radiant.svg); }
+
+.radiantHot {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/radiantHeat.svg); }
+
+.unacclimatized {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/unacclimatized.svg); }
+
+.acclimatized {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.5rem;
+  background: none;
+  background-image: url(../Img/acclimatized.svg); }
+
+.waterBottle {
+  background-repeat: no-repeat;
+  background-image: url(../Img/waterBottle.svg); }
+
+.timeClock {
+  background-repeat: no-repeat;
+  background-image: url(../Img/stopwatch.svg); }
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,102 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #googleMap{
+            border: 1px solid green;
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+        
+    </style>
+<script>
+    
+    var i = 0,
+    oJson = {},
+    sKey;
+for (; sKey = window.localStorage.key(i); i++) {
+//    oJson[sKey] = window.localStorage.getItem(sKey);
+console.log(window.localStorage.getItem(sKey));
+}
+console.log(oJson.toString);
+    
+function createAJAXObj() {
+    'use strict';
+    try {
+        return new XMLHttpRequest();
+    } catch (er1) {
+        try {
+            return new ActiveXObject("Msxml3.XMLHTTP");
+        } catch (er2) {
+            try {
+                return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+            } catch (er3) {
+                try {
+                    return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+                } catch (er4) {
+                    try {
+                        return new ActiveXObject("Msxml2.XMLHTTP");
+                    } catch (er5) {
+                        try {
+                            return new ActiveXObject("Microsoft.XMLHTTP");
+                        } catch (er6) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+    
+function sendRequest(url, callback, postData) {
+    'use strict';
+    var req = createAJAXObj(), method = (postData) ? "POST" : "GET";
+    if (!req) {
+        return;  //stop if unable to create an XHR object
+    }
+    console.log(method);
+    req.open(method, url, true);
+    //the true makes the task async
+    /*
+##         ##     #####      ## ####     ##     ##
+ ##       ##    ##     ##    ###   ##    ##   ##
+  ## ### ##     ##     ##    #######     #####
+   ### ###      ##     ##    ##   ###    ##  ##
+                  #####      ##    ##    ##   ##
+    */
+    if (postData) {
+        req.setRequestHeader(postData, 'application/x-www-form-urlencoded');
+    }
+    req.onreadystatechange = function () {
+        if (req.readyState !== 4) {
+            return; //stop if readyState is not complete
+        }
+        if (req.status !== 200 && req.status !== 304) {
+            return; //stop if not a valid response
+        }
+        callback(req); //run the callback function and pass it the xhr object
+    }
+    req.send(postData);
+}
+    
+    document.addEventListener("DOMContentLoaded", function(){
+//        var url = "events/data.json";
+        var url = "https://api.forecast.io/forecast/e57b7dc490cba92f53d8815729b7c623/45.348391,-75.757045?units=ca";
+    sendRequest(url , 
+                function(data){console.log(data.response)}, 
+                false)});
+    
+</script>
+  
+</head>
+
+<body>
+<div id="googleMap" style="width: 100%;"></div>
+</body>
+
+</html> 
