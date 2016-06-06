@@ -11,9 +11,64 @@ var HSAppByOHCOW = {
         radiantLevel: 0,
         acclimatized: false
     },
+    listOfEntries: [
+        //db4his this is temporary dummy data
+        {temp: 28, accl: false},
+        {temp: 30, accl: false},
+        {temp: 35, accl: false},
+        {temp: 38, accl: false},
+        {temp: 40, accl: false},
+        {temp: 43, accl: false},
+        {temp: 46, accl: false},
+        {temp: 34, accl: true},
+        {temp: 38, accl: true},
+        {temp: 40, accl: true},
+        {temp: 44, accl: true},
+        {temp: 46, accl: true}
+        //db4hie
+    ],
+    settings: {
+      celsius: true
+    },
+    //view constructor definately use
     
-icon:{},
+    renderList: function(HSRepeatingList){
+        for(var i = (HSAppByOHCOW.listOfEntries.length - 1); i > -1; i--){
+            var translateObject = HSAppByOHCOW.interpert(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].accl);
+            var container = document.createElement('div');
+            container.setAttribute('class', 'repeatingListItem');
+            //icon
+            var iconHolder = document.createElement('p');
+            var iconClassString = 'repBackground level' + translateObject.color;
+            iconHolder.innerHTML = HSAppByOHCOW.listOfEntries[i].temp;
+            iconHolder.setAttribute('class', iconClassString);
+            var stringHolder = document.createElement('div');
+            stringHolder.setAttribute('class', 'repRight');
+            //strings
+            var waterString = document.createElement('p');
+            waterString.innerHTML = HSAppByOHCOW.shortWaterStrings[translateObject.waterNumber];
+            var breakString = document.createElement('p');
+            breakString.innerHTML = HSAppByOHCOW.shortBreakStrings[translateObject.breakStrings];
+            stringHolder.appendChild(breakString);
+            stringHolder.appendChild(waterString);
+            container.appendChild(iconHolder);
+            container.appendChild(stringHolder);
+            HSRepeatingList.appendChild(container);
+            //displays icons when necissary
+            if(translateObject.breakStrings > 3){
+                var timeClock = document.createElement('span');
+                timeClock.setAttribute('class', 'timeClock notice');
+                breakString.appendChild(timeClock);
+            }
+            if(translateObject.waterNumber > 0){
+                var waterBottle = document.createElement('span');
+                waterBottle.setAttribute('class', 'waterBottle notice');
+                breakString.appendChild(waterBottle);
+            }
+        }
+    },
 
+//view constructors (not sure if this is the route we want to go down)
     layoutStrings: {
     title : 'Heat Stress Indicator',
     //info strings
@@ -67,6 +122,10 @@ icon:{},
         }
     },
 
+    
+//MODLES
+    //TODO celcius to ferinheight converter
+    
     //humidex
     calculateHumidex: function (temperature, humidity, radiant, clothing){
         //basic validation
@@ -82,122 +141,66 @@ icon:{},
         //calculation
         return temperature+5/9*((6.112* Math.pow(10,(7.5*temperature/(237.7+temperature)))*humidity/100)-10)+radiant*1.9*0.3+clothing*1.9;
     },
-
+    
     //interpertation of humidex
     breakStrings : [
-            'No Heat Stress', 
-            'Post Heat Alerts, Start Recording',
-            'Post Heat Warning, Watch for Symptoms',
-            'Manditory 15 min Heat Break Every Hour',
-            'Manditory 30 min Heat Break Every Hour',
-            'Manditory 45 min Heat Break Every Hour',
-            'ONLY MEDICALLY SUPERVISED WORK CAN CONTINUE',
-            'error'
+            'No Heat Stress', //0
+            'Post Heat Alerts, Start Recording', //1
+            'Post Heat Warning, Watch for Symptoms', //2
+            'Manditory 15 min Heat Break Every Hour', //3
+            'Manditory 30 min Heat Break Every Hour', //4
+            'Manditory 45 min Heat Break Every Hour', //5
+            'ONLY MEDICALLY SUPERVISED WORK CAN CONTINUE', //6
+            'error' //7
         ],
 
-    waterNumbers : [
-            'No Extra Water',
-            'Encourage Extra Water',
-            'Workers Need Extra Water',
-            'Minimum of 1 Cup of Cool (10-15 &ordm;C) Water Every 20 min',
-            'error'
+    waterStrings : [
+            'Normal Water Amount', //0
+            'Encourage Extra Water', //1
+            'Workers Need Extra Water', //2
+            'Minimum of 1 Cup of Cool (10-15 &ordm;C) Water Every 20 min', //3
+            'Consult ACGIH TLV®' //4
         ],
 
     shortBreakStrings: [
-            'No Stress', 
-            'Record',
-            'Warning',
-            '15min/h',
-            '30min/h',
-            '45min/h',
-            'STOP',
-            'error'
+            'No Added Stress', //0
+            'Record Humidex', //1
+            'Post Warning', //2
+            '15min/h Heat Break', //3
+            '30min/h Heat Break', //4
+            '45min/h Heat Break', //5
+            'STOP!!', //6
+            'error' //7
     ],   
 
     shortWaterStrings: [
-            'No Extra',
-            'Extra Water',
-            'Need Extra',
-            'Min 1 cup / 20 min',
-            'error'
+            'Normal Water', //1
+            'Extra Water', //2
+            'Need Extra Water', //3
+            'Min 1 cup / 20 min', //4
+            'Consult ACGIH TLV®' //5
     ],
 
+    //separated from the calculation of the humidex because it is not a calculation
     interpert: function(humidex, acclimitzaton){
         if(isNaN(humidex)){
             console.error("humidex is NaN, please check console for more")
             return;
         };
-        if(acclimitzaton=false){
-            if(humidex<29.5)
-            {
-                return {
-                    color: 1, 
-                    breakStrings: 1, 
-                    waterNumber: 1
-                };
-            }
-             else if(humidex<33.5)
-             {
-                 return {
-                     color: 2,
-                     breakStrings: 2,
-                     waterNumbers: 2
-                 };
-             }
-              else if(humidex<37.5)
-              {
-                  return {
-                      color: 3,
-                      breakStrings:3,
-                      waterNumbers:3
-                  };
-              }
-            else if(humidex<39.5)
-            {
-                return {
-                    color: 4,
-                    breakStrings: 4,
-                    waterNumbers: 3
-                };
-            }
-            else if(humidex<41.5)
-            {
-                return {
-                    color: 5,
-                    breakStrings: 5,
-                    waterNumbers: 3
-                };
-            }
-            else if(humidex<44.5)
-            {
-                return {
-                    color: 6,
-                    breakStrings: 6,
-                    waterNumbers: 3
-                };
-            }
-            else
-                {
-                    return {
-                        color: 7,
-                        breakStrings: 7,
-                        waterNumbers: 4
-                    }
-                }
-        }else{
+        if(acclimitzaton){
             if(humidex<35.5)
             {
 
                 return{
-                    color: 0,
+                    color: 1,
                     breakStrings: 0,
-                    waterNumbers: 0
+                    waterNumber: 0
                 };
             } 
             else if(humidex<39.5)
             {
                 return {
-                    color: 1, 
+                    color: 2, 
                     breakStrings: 1, 
                     waterNumber: 1
                 };
@@ -214,19 +217,75 @@ icon:{},
             {
                 return {
                     color: 3, 
-                    breakStrings: 3, 
+                    breakStrings: 3,
                     waterNumber: 3
                 };
             }
-            //case exception
             else
             {
                 return {
-                    color: 1, 
-                    breakStrings: 1, 
-                    waterNumber: 1
+                    color: 4, 
+                    breakStrings: 6, 
+                    waterNumber: 4
                 };
             }
+        }else{
+            if(humidex<29.5)
+            {
+                return {
+                    color: 1, 
+                    breakStrings: 0, 
+                    waterNumber: 0
+                };
+            }
+             else if(humidex<33.5)
+             {
+                 return {
+                     color: 2,
+                     breakStrings: 1,
+                     waterNumber: 1
+                 };
+             }
+              else if(humidex<37.5)
+              {
+                  return {
+                      color: 2,
+                      breakStrings:2,
+                      waterNumber:2
+                  };
+              }
+            else if(humidex<39.5)
+            {
+                return {
+                    color: 3,
+                    breakStrings: 3,
+                    waterNumber: 3
+                };
+            }
+            else if(humidex<41.5)
+            {
+                return {
+                    color: 3,
+                    breakStrings: 4,
+                    waterNumber: 3
+                };
+            }
+            else if(humidex<44.5)
+            {
+                return {
+                    color: 3,
+                    breakStrings: 5,
+                    waterNumber: 3
+                };
+            }
+            else
+                {
+                    return {
+                        color: 4,
+                        breakStrings: 6,
+                        waterNumber: 4
+                    }
+                }
         }
     },
 
@@ -349,6 +408,7 @@ icon:{},
         x.innerHTML = "Latitude: " + position.coords.latitude + 
         "<br>Longitude: " + position.coords.longitude;	
     }
+    
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -356,7 +416,10 @@ document.addEventListener("DOMContentLoaded", function(){
   
     //TODO: change to make impossible to have naming confilicts
     var x = document.getElementById("demo"), 
-        OHCOWwrapper = document.getElementById("OHCOWwrapper"),
+        HSWrapper = document.getElementById("OHCOWwrapper"),
+//        HSBigTemperature = document.getElementById("bigTemperature"),
+//        HSBigCelOrFer = document.getElementById("bigCelOrFer"),
+//        HSBigHumidity = document.getElementById("bigHumidity"),
         HSNumPad = document.getElementById("numberPad"),
         HSIndoorOutdoor = document.getElementById("indoorOutdoor"),
         HSClothingLevel = document.getElementById("clothingLevel"),
@@ -373,11 +436,53 @@ document.addEventListener("DOMContentLoaded", function(){
         if(HSNumberPad.getAttribute('class') == 'none'){
             HSNumberPad.setAttribute('class', '');
             HSRepeatingList.setAttribute('class', 'none');
+//            HSBigTemperature.setAttribute('class', 'editing');
+//            HSBigHumidity.setAttribute('class', '');
         }else{
             HSNumberPad.setAttribute('class', 'none');
             HSRepeatingList.setAttribute('class', '');
+//            HSBigTemperature.setAttribute('class', '');
+//            HSBigHumidity.setAttribute('class', '');
         }
-    })
+    });
+    //handling temperature or humidity input needs updated index.html
+//    HSBigTemperature.addEventListener('click', function(){
+//        HSNumberPad.setAttribute('class', '');
+//        HSRepeatingList.setAttribute('class', 'none');
+//        HSBigTemperature.setAttribute('class', 'editing');
+//        HSBigHumidity.setAttribute('class', '');
+//    });
+//    HSBigHumidity.addEventListener('click', function(){
+//        HSNumberPad.setAttribute('class', '');
+//        HSRepeatingList.setAttribute('class', 'none');
+//        HSBigTemperature.setAttribute('class', '');
+//        HSBigHumidity.setAttribute('class', 'editing');
+//    });
+    //numberpad
+    HSNumPad.addEventListener('click', function(ev){
+        switch (ev.target.textContent){
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '0':
+                break;
+            case 'next':
+                break;
+            case 'done':
+                break;
+            case 'back':
+                break;
+            default:
+                break;
+        };
+       console.log(ev.target.textContent); 
+    });
     //bottom buttons
     HSIndoorOutdoor.addEventListener('click', function(){
         alert('Outdoor temperature is coming soon!');
@@ -426,25 +531,9 @@ document.addEventListener("DOMContentLoaded", function(){
         HSAccl.setAttribute('class', 'unacclimatized');
     })
     
-    //numberpad
-    HSNumPad.addEventListener('click', function(ev){
-        switch (ev.target.textContent){
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '0':
-                break;
-            default:
-                break;
-        };
-       console.log(ev.target.textContent); 
-    });
+    HSAppByOHCOW.renderList(HSRepeatingList);
+    
+    //Experimental junk
 //    HSAppByOHCOW.construct(x);
     
 //    HSAppByOHCOW.getLocation();
@@ -474,4 +563,4 @@ document.addEventListener("DOMContentLoaded", function(){
     
 //        console.log(dataHolder);
 //        console.log(dataHolderDuplicate);
-        });
+});
