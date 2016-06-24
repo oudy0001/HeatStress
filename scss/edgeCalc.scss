@@ -1,3 +1,5 @@
-@mixin edge($margin, $padding){
-    
+
+@mixin activeText () {
+    border: .15rem solid $borderColor;
+    border-radius: 2rem;
 }

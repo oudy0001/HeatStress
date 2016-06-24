@@ -13,38 +13,34 @@ var HSAppByOHCOW = {
     },
     listOfEntries: [
         //db4his this is temporary dummy data
-        {temp: 28, humd: 50},
-        {temp: 30, humd: 50},
-        {temp: 35, humd: 50},
-        {temp: 38, humd: 50},
-        {temp: 40, humd: 50},
-        {temp: 43, humd: 50},
-        {temp: 46, humd: 50},
-        {temp: 34, humd: 0},
-        {temp: 38, humd: 0},
-        {temp: 40, humd: 0},
-        {temp: 44, humd: 0},
-        {temp: 46, humd: 0}
+        {temp: 28, accl: false},
+        {temp: 30, accl: false},
+        {temp: 35, accl: false},
+        {temp: 38, accl: false},
+        {temp: 40, accl: false},
+        {temp: 43, accl: false},
+        {temp: 46, accl: false},
+        {temp: 34, accl: true},
+        {temp: 38, accl: true},
+        {temp: 40, accl: true},
+        {temp: 44, accl: true},
+        {temp: 46, accl: true}
         //db4hie
     ],
     settings: {
       celsius: true
     },
     //view constructor definately use
-    renderList: function(HSRepeatingList, accl, clothingLevel, radiantLevel){
-		var acclimatizationBool;
-		acclimatizationBool = (accl.getAttribute('class') == 'acclimatized');
-            HSRepeatingList.innerHTML = null;
+    
+    renderList: function(HSRepeatingList){
         for(var i = (HSAppByOHCOW.listOfEntries.length - 1); i > -1; i--){
-			var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].humd, clothingLevel, radiantLevel);
-			console.log(humidex);
-            var translateObject = HSAppByOHCOW.interpert(humidex, acclimatizationBool);
+            var translateObject = HSAppByOHCOW.interpert(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].accl);
             var container = document.createElement("div");
             container.setAttribute("class", "repeatingListItem");
             //icon
             var iconHolder = document.createElement("p");
             var iconClassString = "repBackground level" + translateObject.color;
-            iconHolder.innerHTML = Math.round(humidex);
+            iconHolder.innerHTML = HSAppByOHCOW.listOfEntries[i].temp;
             iconHolder.setAttribute("class", iconClassString);
             var stringHolder = document.createElement("div");
             stringHolder.setAttribute("class", "repRight");
@@ -72,55 +68,97 @@ var HSAppByOHCOW = {
         }
     },
 
+//view constructors (not sure if this is the route we want to go down)
+    layoutStrings: {
+    title : "Heat Stress Indicator",
+    //info strings
+    info : {
+        acclimatization : "stuff about acclimatixation",
+        radiantHeat : "stuff about heat radiation",
+        clothing : "stuff about clothing"
+    }
+    },
+    //inflating
+    construct: function(div){
+        var Header_HS = document.createElement("div");
+        var OutdoorMap_HS = document.createElement("div");
+        var List_HS = document.createElement("div");
+        var IndoorInput_HS = document.createElement("div");
+        var Footer_HS = document.createElement("div");
+
+        var divInnerHeight = div.innerHeight;
+        var divInnerWidth = div.innerWidth;
+
+        //headder
+        if(divInnerHeight < "200px"){
+            var HeadderTitle_HS = document.createElement("h3");
+            Header_HS.appendChild(HeadderTitle_HS);
+
+        }else{
+
+            console.log(divInnerHeight);
+            div.style = "background: blue; height: 4rem; width: 4rem;";
+        }
+
+        //list holder
+        if(divInnerHeight < "50px"){
+            console.log("too small");
+            div.style = "background: blue; height: 4rem; width: 4rem;";
+        }
+
+        //footer
+        if(divInnerHeight < "140px"){
+
+        }
+    },
+
+    //adjust the div
+    adjustHeightWidth: function (div){
+        if(div.innerWidth < "50px"){
+            div.width = "50px";
+        }
+        if(div.innerHeight < "120px"){
+            div.width = "120px";
+        }
+    },
+
 //MODLES
     //TODO celcius to ferinheight converter
-    moveToTemp: function(tempFeedback, humidFeedback){
-			humidFeedback.setAttribute("class", "");
-			tempFeedback.setAttribute("class", "editing");
-			tempFeedback.value = "";
-            tempFeedback.focus();
-	},
-    moveToHumid: function(tempFeedback, humidFeedback){
-			humidFeedback.setAttribute("class", "editing");
-			tempFeedback.setAttribute("class", "");
-			humidFeedback.value = "";
-			humidFeedback.focus();
-	},
+    
 	//new number
 	handleInput: function(input, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized, confirmBtn){
 		var newTemperature = tempFeedback.value + input;
 		var newHumidity = humidFeedback.value + input;
 		var tempFeedbackClass = tempFeedback.getAttribute("class");
 		var humidFeedbackClass = humidFeedback.getAttribute("class");
-//        var moveToHumid = function(){
-//			humidFeedback.setAttribute("class", "editing");
-//			tempFeedback.setAttribute("class", "");
-//			humidFeedback.value = "";
-//			humidFeedback.focus();
-////			confirmBtn.innerHTML = "next";
-//        };
-//        var moveToTemp = function(){
-//			humidFeedback.setAttribute("class", "");
-//			tempFeedback.setAttribute("class", "editing");
-//			tempFeedback.value = "";
-//            tempFeedback.focus();
-////			confirmBtn.innerHTML = "next";
-//		};
+        var moveToHumid = function(){
+			console.log("move to humid");//db4hi
+			humidFeedback.setAttribute("class", "editing");
+			tempFeedback.setAttribute("class", "");
+			humidFeedback.value = "";
+			humidFeedback.focus();
+			confirmBtn.innerHTML = "next";
+        };
+        var moveToTemp = function(){
+			console.log("move to temp");//db4hi
+			humidFeedback.setAttribute("class", "");
+			tempFeedback.setAttribute("class", "editing");
+			tempFeedback.value = "";
+            tempFeedback.focus();
+			confirmBtn.innerHTML = "next";
+		};
 		var finishInput = function(){
+			console.log("finish input");//db4hi
 			humidFeedback.setAttribute("class", "");
 			tempFeedback.setAttribute("class", "");
 			humidFeedback.blur();
 			tempFeedback.blur();
 			var humidex = HSAppByOHCOW.calculateHumidex(tempFeedback.value, humidFeedback.value, radiant, clothing);
-			humidexFeedback.innerHTML = Math.round(humidex);
-			var interperted = HSAppByOHCOW.interpert(humidex, acclimatized);
-			humidexFeedback.setAttribute('class', ('level' + interperted.color));
-			bigBreakString.innerHTML = HSAppByOHCOW.breakStrings[interperted.breakStrings];
-			bigWaterString.innerHTML = HSAppByOHCOW.waterStrings[interperted.breakStrings];
-			confirmBtn.innerHTML = 'done';
+			confirmBtn.innerHTML = "done";
 		}
 		//
 		if(tempFeedbackClass === "editing"){
+			console.log("temp editing ");//db4hi
 			if(newTemperature < 50){
 				tempFeedback.value = newTemperature;
 			}else{
@@ -128,20 +166,73 @@ var HSAppByOHCOW = {
 			}
 //			if(humidFeedback.value == ''){
 			if(tempFeedback.value.length > 1 && humidFeedback.value == ''){
-				HSAppByOHCOW.moveToHumid(tempFeedback, humidFeedback);
-			}else if(humidFeedback.value != '' && tempFeedback.value.length > 1){
+				moveToHumid();
+			}else if(humidFeedback.value != ''){
 				finishInput();
 			}
 		}else if(humidFeedbackClass === "editing"){
+			console.log("humid editing");//db4hi
 			if(newHumidity <= 100 ){
 				humidFeedback.value = newHumidity;
 			}
 			if(humidFeedback.value.length > 1 && tempFeedback.value == '' && humidFeedback.value != 10){
-				HSAppByOHCOW.moveToTemp(tempFeedback, humidexFeedback);
+				moveToTemp();
 			}else if(humidFeedback.value.length > 1 && tempFeedback.value != '' && humidFeedback.value != 10){
 				finishInput();
 			}
+		}else{
+			console.log("nothing being edited but buttons clicked")//db4hi
 		}
+		
+		console.log(tempFeedback.value);
+		console.log(humidFeedback.value);
+		/*
+		if ferenheight 
+			translate to celcius
+			run validation
+			translate back to ferenheight
+		else
+			run validation
+			
+		updating and validation
+			if tempFeedback has editing in the class new temperature can equal new button
+			if new temperature < 50
+				if both full then run translation and update View
+				else move to humidity
+			if new humidity <= 100
+				if both full then run translation and update View
+				else move to temp
+			if valid humidity and 
+		
+		if(input == "done"){
+			return;
+		}
+				//entering for temperature
+			var newNumber = input;
+		if(HSAppByOHCOW.settings.celsius){
+			if(temperature < 50 && tempFeedbackClass == "editing"){
+				temperature += newNumber;
+				if(temperature.length > 1){
+					moveToHumid();
+				};
+				//humidity adding
+			}else{
+				humidFeedback.value += newNumber;
+				if(humidFeedback.value == null){
+					moveToTemp();
+				}else if(humidFeedback.value.length > 1 && humidFeedback.value != 10){
+					moveToTemp();
+				}
+			}
+//			}else{
+				if(humidFeedback.value.length > 2){
+					finishInput();
+				};
+		}
+		if(tempFeedback.value > 10 && humidFeedback > 10){
+			finishInput();
+		}
+		*/
 
 	},
 	
@@ -159,7 +250,7 @@ var HSAppByOHCOW = {
 	},
 	
     //Number inputs
-    handleKeypad: function(key, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList){
+    handleKeypad: function(key, tempFeedback, humidFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList){
         //TODO if we use icons instead of next and done we would need to change this (probably by adding some attribue)
 		var tempFeedbackClass = tempFeedback.getAttribute("class");
 		var humidFeedbackClass = humidFeedback.getAttribute("class");
@@ -187,8 +278,9 @@ var HSAppByOHCOW = {
 //                moveToHumid();
                 break;
             case "done":
-            case "back":
 				HSAppByOHCOW.toggleNewEntry(numberPad, repeatingList, tempFeedback);
+                break;
+            case "back":
                 break;
             default:
                 break;
@@ -197,12 +289,6 @@ var HSAppByOHCOW = {
     
     //humidex
     calculateHumidex: function (temperature, humidity, radiant, clothing){
-		console.log(temperature);
-		console.log(humidity);
-		console.log(radiant);
-		console.log(clothing);
-		temperature = parseInt(temperature);
-		humidity = parseInt(humidity);
         //basic validation
         if(clothing > 3 || clothing < 0){
             console.error("clothing is out of range");
@@ -214,7 +300,7 @@ var HSAppByOHCOW = {
         };
 
         //calculation
-        return temperature+5/9*((6.112 * (Math.pow(10,(7.5*temperature/(237.7+temperature))))*humidity/100)-10)+radiant*1.9*0.3+clothing*1.9;
+        return temperature+5/9*((6.112* Math.pow(10,(7.5*temperature/(237.7+temperature)))*humidity/100)-10)+radiant*1.9*0.3+clothing*1.9;
     },
     
     //interpertation of humidex
@@ -362,7 +448,128 @@ var HSAppByOHCOW = {
                     }
                 }
         }
+    },
+
+    //maps
+    mapFunction: function () {
+      var mapProp = {
+        center:new google.maps.LatLng(1.508742,-0.120850),
+        zoom:5,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
+
+        var mapDiv = document.getElementById("googleMap");
+
+      var map=new google.maps.Map(mapDiv,mapProp);
+
+        console.log(window.innerHeight);
+        mapDiv.style.height = window.innerHeight + "px";
+
+        google.maps.event.addListener(map, "click", function(event){
+            console.log(event.latLng.lat());
+            console.log(event.latLng.lng());
+            console.log(event.latLng);
+        })
+    },
+
+    //get weather data non-jquery
+    createAJAXObj: function () {
+        "use strict";
+        try {
+            return new XMLHttpRequest();
+        } catch (er1) {
+            try {
+                return new ActiveXObject("Msxml3.XMLHTTP");
+            } catch (er2) {
+                try {
+                    return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+                } catch (er3) {
+                    try {
+                        return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+                    } catch (er4) {
+                        try {
+                            return new ActiveXObject("Msxml2.XMLHTTP");
+                        } catch (er5) {
+                            try {
+                                return new ActiveXObject("Microsoft.XMLHTTP");
+                            } catch (er6) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },//works
+
+    sendRequest: function (url, callback, postData) {
+        "use strict";
+        var req = createAJAXObj(), method = (postData) ? "POST" : "GET";
+        if (!req) {
+            console.log("no link");
+            return;  //stop if unable to create an XHR object
+        }
+        req.open(method, url, true);
+        if (postData) {
+            console.log("post data exists");
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        }
+        req.onreadystatechange = function () {
+            console.log("ready state changed");
+            if (req.readyState !== 4) {
+                console.log("ready state is not complete");
+                return; //stop if readyState is not complete
+            }
+            if (req.status !== 200 && req.status !== 304) {
+                console.log("invalid response response type " + req.status);
+                return; //stop if not a valid response
+            }
+            callback(req); //run the callback function and pass it the xhr object
+        }
+        req.send(postData);
+        console.log(req);
+        return req;
+    },
+
+    ajaxData: {},
+
+    weatherForecastgotData : function(){
+        console.log("$.ajax got data");
+        console.log("data= " + ajaxData.responseJSON.hourly.data[0].temperature);
+    },
+
+    weatherForecastwhoops : function(error){
+            console.log("$.ajax error in events");
+        },
+
+    position: {},
+
+    handlePosition: function(gpsPosition){
+    //    var url = "events/data.json";
+            var url = "https://api.forecast.io/forecast/e57b7dc490cba92f53d8815729b7c623/"+ gpsPosition.coords.latitude +"," + gpsPosition.coords.longitude +"?units=ca";
+
+    //    var url = "events/data.json";
+        console.log(url);
+        ajaxData =  $.ajax({ 
+      url:url, 
+      dataType: "jsonp", 
+      crossDomain: true 
+     }).done( HSAppByOHCOW.weatherForecastgotData ).fail( HSAppByOHCOW.weatherForecastwhoops );
+        position = gpsPosition;
+    },
+
+    getLocation: function () {
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(HSAppByOHCOW.handlePosition);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    },
+
+    showPosition: function (position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude;	
     }
+    
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -372,8 +579,8 @@ document.addEventListener("DOMContentLoaded", function(){
     var x = document.getElementById("demo"), 
         HSWrapper = document.getElementById("OHCOWwrapper"),
         //big icon and feedback
-        HSBigHumidex = document.getElementById("humidexFeedback"),
         HSBigTemperature = document.getElementById("bigTemperature"),
+        test = document.getElementById("humidexFeedback"),//db4p
         HSTempFeedback = document.getElementById("tempFeedback"),
         HSBigCelOrFer = document.getElementById("bigCelOrFer"),
         HSBigHumidity = document.getElementById("bigHumidity"),
@@ -382,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function(){
         HSHumidFeeback = document.getElementById("humidFeedback"),
         HSNewEntry = document.getElementById("newEntry"),
         //main display
-        HSNumberPad = document.getElementById("entryPage"),
+        HSNumberPad = document.getElementById("numberPad"),
         HSConfirmBtn = document.getElementById("confirmBtn"),
         HSRepeatingList = document.getElementById("repeatingList"),
         //bottom
@@ -411,25 +618,20 @@ document.addEventListener("DOMContentLoaded", function(){
     //numberpad
     HSNumberPad.addEventListener("click", function(ev){
 		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleKeypad(ev.target, HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
+        HSAppByOHCOW.handleKeypad(ev.target, HSTempFeedback, HSHumidFeeback, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
 					//key, tempFeedback, humidFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList
     });
 	//listening to temp and humid input
-	HSTempFeedback.addEventListener("click", function(){
-		HSTempFeedback.value = '';
-		HSAppByOHCOW.moveToTemp(HSTempFeedback, HSHumidFeeback);
-	});
-	HSHumidFeeback.addEventListener("click", function(){
-		HSHumidFeeback.value = '';
-		HSAppByOHCOW.moveToHumid(HSTempFeedback, HSHumidFeeback);
-	});
+//	HSTempFeedback.addEventListener("click", function(){
+//		HSTempFeedback.value = '';
+//	});
 	HSTempFeedback.addEventListener("input", function(){
 		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
+        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
 	});
 	HSHumidFeeback.addEventListener("input", function(){
 		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
+        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
 	});
     //bottom buttons
     HSIndoorOutdoor.addEventListener("click", function(){
@@ -442,7 +644,6 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.clothingLevel = ++HSAppByOHCOW.currentStatus.clothingLevel;
         }
         HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //TODO when outdoor weather is avaialble this icon set must change
     HSRadiantLevel.addEventListener("click", function(){
@@ -456,7 +657,6 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         HSRadiantLevel.textContent = HSAppByOHCOW.currentStatus.radiantLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     HSAccl.addEventListener("click", function(){
         var HSAcclClass = HSAccl.getAttribute("class");
@@ -467,7 +667,6 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.acclimatized = true;
             HSAccl.setAttribute("class", "acclimatized");
         }
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //reset button on bottom
     HSResetBtn.addEventListener("click", function(){
@@ -482,5 +681,36 @@ document.addEventListener("DOMContentLoaded", function(){
         HSAccl.setAttribute("class", "unacclimatized");
     })
     
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+    HSAppByOHCOW.renderList(HSRepeatingList);
+    
+    //Experimental junk
+//    HSAppByOHCOW.construct(x);
+    
+//    HSAppByOHCOW.getLocation();
+
+    //*/
+    
+    //non-JQuery
+    /*
+//    var url = "events/data.json";
+        var url = "https://api.forecast.io/forecast/e57b7dc490cba92f53d8815729b7c623/45.348391,-75.757045?units=ca";
+    
+//  xhttp.open(url, function(data){console.log(data);}, true);
+//  xhttp.send();
+
+    //*
+    var dataHolder;
+    var dataHolderDuplicate;
+    
+    HSAppByOHCOW.sendRequest(url, function(data){
+        console.log("success data = " + data);
+        console.log("success data = " + Object.keys(data));
+        dataHolder = data;
+        dataHolderDuplicate = 5;
+//        console.log(data.response);
+    }, true);
+    //*/
+    
+//        console.log(dataHolder);
+//        console.log(dataHolderDuplicate);
 });

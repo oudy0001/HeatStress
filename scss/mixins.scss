@@ -1,0 +1,11 @@
+@mixin activeText () {
+    border: .15rem solid $borderColor;
+    border-radius: 2rem;
+}
+
+@mixin botImageHandeler ($pictureHeightWidth, $pictureMargin, $pictureBackground){
+        height: $pictureHeightWidth;
+        width: $pictureHeightWidth;
+        margin: $pictureMargin;
+        background: $pictureBackground;
+}

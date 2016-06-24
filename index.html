@@ -12,76 +12,128 @@
 
     <div id="modalBackground"></div>
 <body>
-<!--    <header class="none">-->
     <header>
-        <div id="OHCOWIconHolder" class="btnOutline">
-            <button id="OHCOWIcon"></button>
+
+        <div class="btnOutline">
+            <div id="OHCOWIconHolder" class="btnInline">
+                <button id="OHCOWIcon"></button>
+            </div>
         </div>
-        <h1 id="title">Heat Stress Calculator</h1>
+        <h1 id="title" >Heat Stress Calculator</h1>
     </header>
     <div id="OHCOWwrapper">
-        <div id="bigDisplay">
+        
+        <div id="repeatingList" class="none">
+            <div class="repeatingListItem">
+				<p>Please enter data</p>
+            </div>
+        </div>
+        <div id="entryPage" class="">
+			<div id="bigDisplay">
             <div id="bigHumidexDiv">
-                <p id="humidexFeedback" class="level1">44</p>
+                <p id="humidexFeedback" class="level1">  </p>
             </div>
             <div id="bigInstructionsDiv">
-                <p>Temperature <span id="tempFeedback"></span><sup>o</sup>C</p>
-                <p>Humidity <span id="humidFeedback"></span>%</p>
-                <p>/*break string*/</p>
-                <p>/*water string*/</p>
-                <button id="newEntry" class="btnOutline notice"></button>
-                <div id="waterNotice" class="timeClock notice"></div>
-                <div id="breakNotice" class="waterBottle notice"></div>
+                    <p id="bigTemperature">Temperature
+                        <input id="tempFeedback" type="number" class="editing"/>
+                        <sup>o</sup><span id="bigCelOrFer">C</span>
+                    </p>
+                    <p id="bigHumidity">Humidity 
+                        <input id="humidFeedback" class="" type="number" max="100"/>
+                        %
+                    </p>
+                    <p id="bigBreakString">/*break string*/</p>
+                    <p id="bigWaterString">/*water string*/</p>
+                    <div class="btnOutline">
+                        <button id="newEntry" class="btnInline notice"></button>
+                    </div>
+                    <div id="waterNotice" class="timeClock notice"></div>
+                    <div id="breakNotice" class="waterBottle notice"></div>
             </div>
         </div>
-        <div id="repeatingList">
-            <div class="repeatingListItem">
-                <p class="repBackground level1">44</p>
-                <div class="repRight">
-                    <p>/*water string*/ <span class="waterBottle notice"/></p>
-                    <p>/*break string*/ <span class="timeClock notice"/></p>
+        <div id="numberPadContainer" class="">
+            <div class="numberPadRow">
+                <div class="btnOutline">
+                    <button class="btnInline">1</button>
                 </div>
-                <p class="repBackground level2">44</p>
-                <div class="repRight">
-                    <p>/*water string*/ <span class="waterBottle notice"/></p>
-                    <p>/*break string*/ <span class="timeClock notice"/></p>
+                <div class="btnOutline">
+                    <button class="btnInline">2</button>
                 </div>
-                <p class="repBackground level3">44</p>
-                <div class="repRight">
-                    <p>/*water string*/ <span class="waterBottle notice"/></p>
-                    <p>/*break string*/ <span class="timeClock notice"/></p>
-                </div>
-                <p class="repBackground level4">44</p>
-                <div class="repRight">
-                    <p>/*water string*/ <span class="waterBottle notice"/></p>
-                    <p>/*break string*/ <span class="timeClock notice"/></p>
+                <div class="btnOutline">
+                    <button class="btnInline">3</button>
                 </div>
             </div>
+            <div class="numberPadRow">
+                <div class="btnOutline">
+                    <button class="btnInline">4</button>
+                </div>
+                <div class="btnOutline">
+                    <button class="btnInline">5</button>
+                </div>
+                <div class="btnOutline">
+                    <button class="btnInline">6</button>
+                </div>
+            </div>
+            <div class="numberPadRow">
+                <div class="btnOutline">
+                    <button class="btnInline">7</button>
+                </div>
+                <div class="btnOutline">
+                    <button class="btnInline">8</button>
+                </div>
+                <div class="btnOutline">
+                    <button class="btnInline">9</button>
+                </div>
+            </div>
+            <div class="numberPadRow">
+                <div class="btnOutline">
+                    <button class="btnInline">back</button>
+                </div>
+                <div class="btnOutline">
+                    <button class="btnInline">0</button>
+                </div>
+                <div class="btnOutline">
+                    <button id="confirmBtn" class="btnInline">next</button>
+                </div>
+            </div>
+			</div>
+			
         </div>
-        <div id="numberPad" class="none">
-            <div class="numberPadRow">
-                <button class="btnOutline">1</button>
-                <button class="btnOutline">2</button>
-                <button class="btnOutline">3</button>
+			<div id="shadeBoxFooter"></div>
+		<footer>
+            <div id="botBtnDiv">
+                <div class="btnOutline">
+                    <div class="btnInline">
+                        <button id="indoorOutdoor" class="indoor"></button>
+                    </div>
+                </div>
+                <div class="btnOutline">
+                    <div class="btnInline">
+                        <button id="clothingLevel" class="clothing">0</button>
+                    </div>
+                </div>
+                <div class="btnOutline">
+                    <div class="btnInline">
+                        <button id="radiantLevel" class="radiantNone">0</button>
+                    </div>
+                </div>
+                <div class="btnOutline">
+                    <div class="btnInline">
+                        <button id="acclimatization" class="unacclimatized"></button>
+                    </div>
+                </div>
             </div>
-            <div class="numberPadRow">
-                <button class="btnOutline">4</button>
-                <button class="btnOutline">5</button>
-                <button class="btnOutline">6</button>
+            <div id="feedbackHolder">
+                <p id="feedbackText">feedback
+                    <span class="btnOutline">
+                        <button id="resetBtn" class="btnInline"></button>
+                </span>
+                </p>
             </div>
-            <div class="numberPadRow">
-                <button class="btnOutline">7</button>
-                <button class="btnOutline">8</button>
-                <button class="btnOutline">9</button>
-            </div>
-            <div class="numberPadRow hidden">
-                <button class="btnOutline">next</button>
-                <button class="btnOutline">0</button>
-                <button class="btnOutline">done</button>
-            </div>
-        </div>
-        <div id="footerCorrect">
+			</footer>
 <!--
+
+		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSClothingLevel.innerHTML, HSRadiantLevel.innerHTML);
 <svg x="0px" y="0px" width="40px" height="40px" viewBox="0 0 351.9 130" style="margin: auto;">
 <path d="M349.2,120c-5.5,9.6-17.8,12.8-27.3,7.3L175.9,43.1L30,127.3c-9.6,5.5-21.8,2.2-27.3-7.3c-5.5-9.6-2.2-21.8,7.3-27.3
 	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
@@ -98,30 +150,6 @@
 	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
 </svg>
 -->
-
-
-        </div>
     </div>
-        <footer>
-            <div id="shadeBoxFooter"></div>
-            <div id="botBtnDiv">
-                <div class="btnOutline">
-                    <button id="indoorOutdoor" class="indoor"></button>
-                </div>
-                <div class="btnOutline">
-                    <button id="clothingLevel" class="clothing">0</button>
-                </div>
-                <div class="btnOutline">
-                    <button id="radiantLevel" class="radiantNone">0</button>
-                </div>
-                <div class="btnOutline">
-                    <button id="acclimatization" class="unacclimatized"></button>
-                </div>
-            </div>
-            <div id="feedbackHolder">
-                <p id="feedbackText">feedback
-                <button id="resetBtn" class="btnOutline"></button></p>
-            </div>
-        </footer>
 </body>
 </html>
