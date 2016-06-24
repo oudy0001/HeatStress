@@ -14,24 +14,22 @@
 <body>
     <header>
 
-        <div class="btnOutline">
-            <div id="OHCOWIconHolder" class="btnInline">
-                <button id="OHCOWIcon"></button>
+            <div id="OHCOWIconHolder" class="btnOutline">
+                <button id="OHCOWIcon" class="btnInline"></button>
             </div>
-        </div>
-        <h1 id="title" >Heat Stress Calculator</h1>
+        <h1 id="title" >Heat Stress</h1>
     </header>
     <div id="OHCOWwrapper">
         
-        <div id="repeatingList" class="none">
-            <div class="repeatingListItem">
+        <div id="repeatingListPage" class="none">
+			<div id="repeatingListHolder">
 				<p>Please enter data</p>
-            </div>
+			</div>
         </div>
         <div id="entryPage" class="">
 			<div id="bigDisplay">
             <div id="bigHumidexDiv">
-                <p id="humidexFeedback" class="level1">  </p>
+                <p id="humidexFeedback"></p>
             </div>
             <div id="bigInstructionsDiv">
                     <p id="bigTemperature">Temperature
@@ -42,11 +40,8 @@
                         <input id="humidFeedback" class="" type="number" max="100"/>
                         %
                     </p>
-                    <p id="bigBreakString">/*break string*/</p>
-                    <p id="bigWaterString">/*water string*/</p>
-                    <div class="btnOutline">
-                        <button id="newEntry" class="btnInline notice"></button>
-                    </div>
+				<p id="bigBreakString"><br/></p>
+			<p id="bigWaterString"><br/></p>
                     <div id="waterNotice" class="timeClock notice"></div>
                     <div id="breakNotice" class="waterBottle notice"></div>
             </div>
@@ -101,6 +96,9 @@
         </div>
 			<div id="shadeBoxFooter"></div>
 		<footer>
+                    <div id="newEntryOutline" class="none">
+                        <button id="newEntry" class="btnInline notice"></button>
+                    </div>
             <div id="botBtnDiv">
                 <div class="btnOutline">
                     <div class="btnInline">
@@ -131,25 +129,6 @@
                 </p>
             </div>
 			</footer>
-<!--
-
-		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSClothingLevel.innerHTML, HSRadiantLevel.innerHTML);
-<svg x="0px" y="0px" width="40px" height="40px" viewBox="0 0 351.9 130" style="margin: auto;">
-<path d="M349.2,120c-5.5,9.6-17.8,12.8-27.3,7.3L175.9,43.1L30,127.3c-9.6,5.5-21.8,2.2-27.3-7.3c-5.5-9.6-2.2-21.8,7.3-27.3
-	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
-</svg>
--->
-<!--
-<svg version="1.1"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-	 x="0px" y="0px" width="351.9px" height="130px" viewBox="0 0 351.9 130" enable-background="new 0 0 351.9 130"
-	 xml:space="preserve">
-<defs>
-</defs>
-<path d="M349.2,120c-5.5,9.6-17.8,12.8-27.3,7.3L175.9,43.1L30,127.3c-9.6,5.5-21.8,2.2-27.3-7.3c-5.5-9.6-2.2-21.8,7.3-27.3
-	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
-</svg>
--->
     </div>
 </body>
 </html>

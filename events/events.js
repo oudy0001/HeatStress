@@ -14,12 +14,11 @@ var HSAppByOHCOW = {
     listOfEntries: [
         //db4his this is temporary dummy data
         {temp: 28, humd: 50},
-        {temp: 30, humd: 50},
-        {temp: 35, humd: 50},
-        {temp: 38, humd: 50},
-        {temp: 40, humd: 50},
-        {temp: 43, humd: 50},
-        {temp: 46, humd: 50},
+        {temp: 28, humd: 50},
+        {temp: 28, humd: 50},
+        {temp: 28, humd: 50},
+        {temp: 28, humd: 50},
+        {temp: 28, humd: 50},
         {temp: 34, humd: 0},
         {temp: 38, humd: 0},
         {temp: 40, humd: 0},
@@ -31,13 +30,13 @@ var HSAppByOHCOW = {
       celsius: true
     },
     //view constructor definately use
-    renderList: function(HSRepeatingList, accl, clothingLevel, radiantLevel){
+    renderList: function(HSRepeatingListHolder, accl, clothingLevel, radiantLevel){
 		var acclimatizationBool;
+		if(accl)
 		acclimatizationBool = (accl.getAttribute('class') == 'acclimatized');
-            HSRepeatingList.innerHTML = null;
+            HSRepeatingListHolder.innerHTML = null;
         for(var i = (HSAppByOHCOW.listOfEntries.length - 1); i > -1; i--){
 			var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].humd, clothingLevel, radiantLevel);
-			console.log(humidex);
             var translateObject = HSAppByOHCOW.interpert(humidex, acclimatizationBool);
             var container = document.createElement("div");
             container.setAttribute("class", "repeatingListItem");
@@ -57,7 +56,7 @@ var HSAppByOHCOW = {
             stringHolder.appendChild(waterString);
             container.appendChild(iconHolder);
             container.appendChild(stringHolder);
-            HSRepeatingList.appendChild(container);
+            HSRepeatingListHolder.appendChild(container);
             //displays icons when necissary
             if(translateObject.breakStrings > 3){
                 var timeClock = document.createElement("span");
@@ -92,20 +91,6 @@ var HSAppByOHCOW = {
 		var newHumidity = humidFeedback.value + input;
 		var tempFeedbackClass = tempFeedback.getAttribute("class");
 		var humidFeedbackClass = humidFeedback.getAttribute("class");
-//        var moveToHumid = function(){
-//			humidFeedback.setAttribute("class", "editing");
-//			tempFeedback.setAttribute("class", "");
-//			humidFeedback.value = "";
-//			humidFeedback.focus();
-////			confirmBtn.innerHTML = "next";
-//        };
-//        var moveToTemp = function(){
-//			humidFeedback.setAttribute("class", "");
-//			tempFeedback.setAttribute("class", "editing");
-//			tempFeedback.value = "";
-//            tempFeedback.focus();
-////			confirmBtn.innerHTML = "next";
-//		};
 		var finishInput = function(){
 			humidFeedback.setAttribute("class", "");
 			tempFeedback.setAttribute("class", "");
@@ -113,7 +98,8 @@ var HSAppByOHCOW = {
 			tempFeedback.blur();
 			var humidex = HSAppByOHCOW.calculateHumidex(tempFeedback.value, humidFeedback.value, radiant, clothing);
 			humidexFeedback.innerHTML = Math.round(humidex);
-			var interperted = HSAppByOHCOW.interpert(humidex, acclimatized);
+		var acclimatizedBool = acclimatized.getAttribute("class") != "unacclimatized";
+			var interperted = HSAppByOHCOW.interpert(humidex, acclimatizedBool);
 			humidexFeedback.setAttribute('class', ('level' + interperted.color));
 			bigBreakString.innerHTML = HSAppByOHCOW.breakStrings[interperted.breakStrings];
 			bigWaterString.innerHTML = HSAppByOHCOW.waterStrings[interperted.breakStrings];
@@ -146,20 +132,22 @@ var HSAppByOHCOW = {
 	},
 	
 	//toggle new input page
-	toggleNewEntry: function(numberPad, repeatingList, tempFeedback){
+	toggleNewEntry: function(numberPad, newEntryButton, repeatingList, tempFeedback){
         if(numberPad.getAttribute("class") == "none"){
             numberPad.setAttribute("class", "");
+            newEntryButton.setAttribute("class", "none");
 			tempFeedback.setAttribute("class", "editing");
             repeatingList.setAttribute("class", "none");
         }else{
             numberPad.setAttribute("class", "none");
+            newEntryButton.setAttribute("class", "");
             repeatingList.setAttribute("class", "");
 			tempFeedback.setAttribute("class", "");
         }
 	},
 	
     //Number inputs
-    handleKeypad: function(key, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList){
+    handleKeypad: function(key, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList, newEntry){
         //TODO if we use icons instead of next and done we would need to change this (probably by adding some attribue)
 		var tempFeedbackClass = tempFeedback.getAttribute("class");
 		var humidFeedbackClass = humidFeedback.getAttribute("class");
@@ -181,14 +169,16 @@ var HSAppByOHCOW = {
 				};
 //				var input = 
 				HSAppByOHCOW.handleInput(key.textContent, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized, confirmBtn);
-				//input, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, confirmBtn
                 break;
             case "next":
-//                moveToHumid();
                 break;
             case "done":
+				var newItem = {temp: parseInt(tempFeedback.value), humd: parseInt(humidFeedback.value)};
+				HSAppByOHCOW.listOfEntries.push(newItem);
+				console.log('pushed');
             case "back":
-				HSAppByOHCOW.toggleNewEntry(numberPad, repeatingList, tempFeedback);
+				HSAppByOHCOW.renderList(repeatingList, acclimatized, clothing, radiant);
+				HSAppByOHCOW.toggleNewEntry(numberPad, newEntry, repeatingList, tempFeedback);
                 break;
             default:
                 break;
@@ -197,10 +187,6 @@ var HSAppByOHCOW = {
     
     //humidex
     calculateHumidex: function (temperature, humidity, radiant, clothing){
-		console.log(temperature);
-		console.log(humidity);
-		console.log(radiant);
-		console.log(clothing);
 		temperature = parseInt(temperature);
 		humidity = parseInt(humidity);
         //basic validation
@@ -380,11 +366,12 @@ document.addEventListener("DOMContentLoaded", function(){
         HSBigBreakString = document.getElementById("bigBreakString"),
         HSBigWaterString = document.getElementById("bigWaterString"),
         HSHumidFeeback = document.getElementById("humidFeedback"),
-        HSNewEntry = document.getElementById("newEntry"),
+        HSNewEntry = document.getElementById("newEntryOutline"),
         //main display
         HSNumberPad = document.getElementById("entryPage"),
         HSConfirmBtn = document.getElementById("confirmBtn"),
-        HSRepeatingList = document.getElementById("repeatingList"),
+        HSRepeatingListPage = document.getElementById("repeatingListPage"),
+        HSRepeatingListHolder = document.getElementById("repeatingListHolder"),
         //bottom
         HSIndoorOutdoor = document.getElementById("indoorOutdoor"),
         HSClothingLevel = document.getElementById("clothingLevel"),
@@ -395,24 +382,11 @@ document.addEventListener("DOMContentLoaded", function(){
         ;
     //new entry
     HSNewEntry.addEventListener("click", function(){
-		HSAppByOHCOW.toggleNewEntry(HSNumberPad, HSRepeatingList, HSTempFeedback)}
+		HSAppByOHCOW.toggleNewEntry(HSNumberPad, HSNewEntry, HSRepeatingListPage, HSTempFeedback)}
     );
-    //handling temperature or humidity input
-    HSBigTemperature.addEventListener("click", function(){
-        HSNumberPad.setAttribute("class", "");
-        HSRepeatingList.setAttribute("class", "none");
-        HSBigHumidity.setAttribute("class", "");
-    });
-    HSBigHumidity.addEventListener("click", function(){
-        HSNumberPad.setAttribute("class", "");
-        HSRepeatingList.setAttribute("class", "none");
-        HSBigTemperature.setAttribute("class", "");
-    });
     //numberpad
     HSNumberPad.addEventListener("click", function(ev){
-		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleKeypad(ev.target, HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
-					//key, tempFeedback, humidFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList
+        HSAppByOHCOW.handleKeypad(ev.target, HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, HSAccl, HSConfirmBtn, HSNumberPad, HSRepeatingListPage, HSNewEntry);
     });
 	//listening to temp and humid input
 	HSTempFeedback.addEventListener("click", function(){
@@ -425,11 +399,11 @@ document.addEventListener("DOMContentLoaded", function(){
 	});
 	HSTempFeedback.addEventListener("input", function(){
 		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
+        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingListHolder);
 	});
 	HSHumidFeeback.addEventListener("input", function(){
 		var acclimatizedBool = HSAccl.getAttribute("class") != "unacclimatized";
-        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingList);
+        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingListHolder);
 	});
     //bottom buttons
     HSIndoorOutdoor.addEventListener("click", function(){
@@ -442,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.clothingLevel = ++HSAppByOHCOW.currentStatus.clothingLevel;
         }
         HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //TODO when outdoor weather is avaialble this icon set must change
     HSRadiantLevel.addEventListener("click", function(){
@@ -456,7 +430,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         HSRadiantLevel.textContent = HSAppByOHCOW.currentStatus.radiantLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     HSAccl.addEventListener("click", function(){
         var HSAcclClass = HSAccl.getAttribute("class");
@@ -467,7 +441,7 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.acclimatized = true;
             HSAccl.setAttribute("class", "acclimatized");
         }
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //reset button on bottom
     HSResetBtn.addEventListener("click", function(){
@@ -482,5 +456,5 @@ document.addEventListener("DOMContentLoaded", function(){
         HSAccl.setAttribute("class", "unacclimatized");
     })
     
- 		HSAppByOHCOW.renderList(HSRepeatingList, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
 });
