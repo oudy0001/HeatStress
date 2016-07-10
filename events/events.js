@@ -30,13 +30,15 @@ var HSAppByOHCOW = {
       celsius: true
     },
     //view constructor definately use
-    renderList: function(HSRepeatingListHolder, accl, clothingLevel, radiantLevel){
+    renderList: function(HSRepeatingListHolder, accl, radiantLevel, clothingLevel){
+		console.log('rendered. div:' + HSRepeatingListHolder +' accl:'+ accl +' clothing:' +  clothingLevel +' rad:'+ radiantLevel);//db4p
+		console.log(accl.getAttribute('class'));//db4p
 		var acclimatizationBool;
-		if(accl)
-		acclimatizationBool = (accl.getAttribute('class') == 'acclimatized');
+			acclimatizationBool = (accl.getAttribute('class') == "acclimatized");
+			acclimatizationBool = (accl.getAttribute('class') == "acclimatized");
             HSRepeatingListHolder.innerHTML = null;
         for(var i = (HSAppByOHCOW.listOfEntries.length - 1); i > -1; i--){
-			var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].humd, clothingLevel, radiantLevel);
+			var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].humd, radiantLevel, clothingLevel);
             var translateObject = HSAppByOHCOW.interpert(humidex, acclimatizationBool);
             var container = document.createElement("div");
             container.setAttribute("class", "repeatingListItem");
@@ -98,7 +100,7 @@ var HSAppByOHCOW = {
 			tempFeedback.blur();
 			var humidex = HSAppByOHCOW.calculateHumidex(tempFeedback.value, humidFeedback.value, radiant, clothing);
 			humidexFeedback.innerHTML = Math.round(humidex);
-		var acclimatizedBool = acclimatized.getAttribute("class") != "unacclimatized";
+			var acclimatizedBool = acclimatized.getAttribute("class") == "acclimatized" ? true : false;
 			var interperted = HSAppByOHCOW.interpert(humidex, acclimatizedBool);
 			humidexFeedback.setAttribute('class', ('level' + interperted.color));
 			bigBreakString.innerHTML = HSAppByOHCOW.breakStrings[interperted.breakStrings];
@@ -177,7 +179,7 @@ var HSAppByOHCOW = {
 				HSAppByOHCOW.listOfEntries.push(newItem);
 				console.log('pushed');
             case "back":
-				HSAppByOHCOW.renderList(repeatingList, acclimatized, clothing, radiant);
+				HSAppByOHCOW.renderList(repeatingList, acclimatized, radiant, clothing);
 				HSAppByOHCOW.toggleNewEntry(numberPad, newEntry, repeatingList, tempFeedback);
                 break;
             default:
@@ -244,6 +246,7 @@ var HSAppByOHCOW = {
 
     //separated from the calculation of the humidex because it is not a calculation
     interpert: function(humidex, acclimitzaton){
+		console.log('interperteed');
         if(isNaN(humidex)){
             console.error("humidex is NaN, please check console for more")
             return;
@@ -416,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.clothingLevel = ++HSAppByOHCOW.currentStatus.clothingLevel;
         }
         HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //TODO when outdoor weather is avaialble this icon set must change
     HSRadiantLevel.addEventListener("click", function(){
@@ -430,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         }
         HSRadiantLevel.textContent = HSAppByOHCOW.currentStatus.radiantLevel;
- 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     HSAccl.addEventListener("click", function(){
         var HSAcclClass = HSAccl.getAttribute("class");
@@ -441,20 +444,20 @@ document.addEventListener("DOMContentLoaded", function(){
             HSAppByOHCOW.currentStatus.acclimatized = true;
             HSAccl.setAttribute("class", "acclimatized");
         }
- 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
     });
     //reset button on bottom
-    HSResetBtn.addEventListener("click", function(){
-        
-        HSAppByOHCOW.currentStatus.clothingLevel = 0;
-        HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
-        
-        HSRadiantLevel.setAttribute("class", "radiantNone");
-        HSAppByOHCOW.currentStatus.radiantLevel = 0;
-        
-        HSAppByOHCOW.currentStatus.acclimatized = false;
-        HSAccl.setAttribute("class", "unacclimatized");
-    })
+//    HSResetBtn.addEventListener("click", function(){
+//        
+//        HSAppByOHCOW.currentStatus.clothingLevel = 0;
+//        HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
+//        
+//        HSRadiantLevel.setAttribute("class", "radiantNone");
+//        HSAppByOHCOW.currentStatus.radiantLevel = 0;
+//        
+//        HSAppByOHCOW.currentStatus.acclimatized = false;
+//        HSAccl.setAttribute("class", "unacclimatized");
+//    })
     
- 		HSAppByOHCOW.renderList(HSRepeatingListHolder, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 		HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
 });

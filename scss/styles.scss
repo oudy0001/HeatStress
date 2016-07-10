@@ -269,9 +269,9 @@ button{
 }
 #botBtnDiv{
     position: fixed;
-    bottom: 4rem;
+//    bottom: 4rem;//uncomment to return feedbackdiv
+    bottom: 4rem;//
 	background: white;
-//	width: 100%;
 }
 #botBtnDiv{
     .btnOutline{
