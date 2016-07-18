@@ -26,71 +26,100 @@
 				<p>Please enter data</p>
 			</div>
         </div>
-        <div id="entryPage" class="">
-			<div id="bigDisplay">
-            <div id="bigHumidexDiv">
-                <p id="humidexFeedback"></p>
-            </div>
-            <div id="bigInstructionsDiv">
-                    <p id="bigTemperature">Temperature
-                        <input id="tempFeedback" type="number" class="editing"/>
-                        <sup>o</sup><span id="bigCelOrFer">C</span>
-                    </p>
-                    <p id="bigHumidity">Humidity 
-                        <input id="humidFeedback" class="" type="number" max="100"/>
-                        %
-                    </p>
-				<p id="bigBreakString"><br/></p>
-			<p id="bigWaterString"><br/></p>
-                    <div id="waterNotice" class="timeClock notice"></div>
-                    <div id="breakNotice" class="waterBottle notice"></div>
-            </div>
-        </div>
-        <div id="numberPadContainer" class="">
-            <div class="numberPadRow">
-                <div class="btnOutline">
-                    <button class="btnInline">1</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">2</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">3</button>
-                </div>
-            </div>
-            <div class="numberPadRow">
-                <div class="btnOutline">
-                    <button class="btnInline">4</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">5</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">6</button>
-                </div>
-            </div>
-            <div class="numberPadRow">
-                <div class="btnOutline">
-                    <button class="btnInline">7</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">8</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">9</button>
-                </div>
-            </div>
-            <div class="numberPadRow">
-                <div class="btnOutline">
-                    <button class="btnInline">back</button>
-                </div>
-                <div class="btnOutline">
-                    <button class="btnInline">0</button>
-                </div>
-                <div class="btnOutline">
-                    <button id="confirmBtn" class="btnInline">next</button>
-                </div>
-            </div>
+        <div id="entryPage" class="clearfix">
+			<div id="bigDisplay" class="clearfix">
+				<div id="bigHumidexDiv">
+					<p id="humidexFeedback"></p>
+				</div>
+				<div id="bigInstructionsDiv">
+					<p id="bigBreakString"><br></p>
+					<p id="bigWaterString"><br></p>
+					<div id="breakNotice" class="timeClock notice"></div>
+					<div id="waterNotice" class="waterBottle notice"></div>
+				</div>
+			</div>
+			<div id="inputWrapper" class="clearfix">
+				<div id="temperatureWrapper">
+					<p>Temperature</p>
+					<table>
+						<tr id="addTempWrapper">
+							<td id="add10temp" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+							<td id="add1temp" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg>
+</td>
+						</tr>
+						<tr id="">
+							<td id="temTens">5</td>
+							<td id="temSingles">0</td>
+							<td><sup>o</sup><span id="CorF">C</span></td>
+						</tr>
+						<tr id="subTempWrapper">
+							<td id="sub10temp" class="inputAddSub sub">
+								<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg>
+							</td>
+							<td id="sub1temp" class="inputAddSub sub">
+							<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="humidityWrapper">
+					<p>Humidity</p>
+					<table>
+						<tr id="addHumWrapper">
+							<td id="add10hum" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+							<td id="add1hum" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+						</tr>
+						<tr>
+							<td id="humTens">1</td>
+							<td id="humSingles">0</td>
+							<td><sup><!--this is done to keep the heights the same--></sup>%</td>
+						</tr>
+						<tr id="subHumWrapper">
+							<td id="sub10hum" class="inputAddSub sub"><svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg></td>
+							<td id="sub1hum" class="inputAddSub sub"><svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			
         </div>
@@ -122,7 +151,8 @@
                 </div>
             </div>
             <div id="feedbackHolder">
-                <p id="feedbackText">feedback
+                <p id="feedbackText">
+					<span id="outputText">feedback</span>
                     <span class="btnOutline">
                         <button id="resetBtn" class="btnInline"></button>
                 </span>

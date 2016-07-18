@@ -1,0 +1,7 @@
+select{
+	margin: 2rem;
+	
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}

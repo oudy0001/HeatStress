@@ -25,7 +25,7 @@ $maxWidth: 20rem;
 $outlineSize: .1rem;
 //$buttonShadeOutlineColor: #000;
 //$boxShadow: 0px 0px $shadowSize $buttonShadeColor;
-$numberPadBtnHW: 2.4rem;
+$numberPadBtnHW: 2rem;
 $numberPadBtnMargin: .3rem;
 $numberPadMargin: $maxWidth - 5*($numberPadBtnHW + 2*$numberPadBtnMargin + 2*$outlineSize);
 
@@ -42,11 +42,29 @@ body{
     margin: 0 auto;
 }
 #bigDisplay{
-    clear: both;
+	margin-top: 1rem;
+//	bottom: 0;
 }
 header, footer{
     z-index: 5;
     background: white;
+}
+#OHCOWIconHolder{
+	width: $numberPadBtnHW + 2*$numberPadBtnMargin;
+	height: $numberPadBtnHW + 2*$numberPadBtnMargin;
+	margin-top: .5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    float: left;
+	background: radial-gradient(#fff $numberPadBtnHW/2, #ccc ($numberPadBtnHW + 2*$numberPadBtnMargin)/2);
+}
+#OHCOWIcon{
+    background: $pictureBackground;
+	float: left;
+	@include botImageHandeler ($pictureHeightWidth, $pictureMargin, $pictureBackground);
+    background-image: url(../Img/ohcow%20temp%20icon.svg);
+    background-repeat: no-repeat;
+	margin: .4rem;
 }
 .btnOutline{
     border-radius: 50%;
@@ -71,7 +89,72 @@ p, h3, input{
 .editing{
 	@include activeText
 }
-$paddingQuickChange: 4rem;
+$paddingQuickChange: 2rem;
+$inputWrapper: 6rem;
+//$inputWrapperMargin: ($maxWidth/2 - $inputWrapper)/2;
+$inputWrapperMargin: 0;
+#temperatureWrapper{
+	p{
+		text-align: center;
+	}
+	position: absolute;
+	margin: $inputWrapperMargin;
+	width: $inputWrapper;
+	left: 0;
+	bottom: 1rem;
+}
+#humidityWrapper{
+	p{
+		text-align: center;
+	}
+	position: absolute;
+	margin: $inputWrapperMargin;
+	width: $inputWrapper;
+	bottom: 1rem;
+	right: 0;
+}
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+#inputWrapper{
+	height: 10rem;
+	width: 14rem;
+	margin: 0 auto;
+	table{
+		margin: 0 auto;
+//		border: 1px solid blue;
+	}
+	p{
+		margin: 0 auto;
+	}
+	svg{
+		height: .5rem;
+		margin: .5rem;
+	}
+	tr{
+		margin: 0;
+		padding: 0;
+		height: 1rem !important;
+	}
+	td{
+		font-family: 'Poiret One', cursive;
+		text-align: center;
+	}
+	.inputAddSub{
+		width: 1.5rem;
+		height: .5rem;
+		margin: 0;
+		padding: 0;
+		background: $pictureBackground;
+	}
+	position: relative;
+	bottom: 1rem;
+}
+//old
 #numberPadContainer{
     position: fixed;
 	bottom: 8rem;
@@ -167,24 +250,6 @@ header{
 		background-image: url(../Img/refresh-13.svg);
     }
 }
-#OHCOWIconHolder{
-	width: $numberPadBtnHW + 2*$numberPadBtnMargin;
-	height: $numberPadBtnHW + 2*$numberPadBtnMargin;
-	margin-top: .5rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    float: left;
-	background: radial-gradient(#fff $numberPadBtnHW/2, #ccc ($numberPadBtnHW + 2*$numberPadBtnMargin)/2);
-}
-#OHCOWIcon{
-    height: $numberPadBtnHW;
-    width: $numberPadBtnHW;
-    margin: $pictureMargin;
-    background: $pictureBackground;
-    background-image: url(../Img/ohcow%20temp%20icon.svg);
-    background-repeat: no-repeat;
-	float: left;
-}
 //#shadeBoxFooter{
 //    box-shadow: 0px -3px 3px #999; 
 //    width: $maxWidth;
@@ -199,8 +264,6 @@ footer{
     background: white;
     width: $maxWidth;
     height: 8rem;
-//    .btnOutline{
-//    }
 }
 button{
     border: 0rem solid white;
@@ -209,11 +272,17 @@ button{
 #bigHumidexDiv{
 	margin-left: 0.5rem;
     width: 6rem; 
-    float: left; 
+	float: left;
+}
+#bigBreakString{
+	height: 2rem;
+	margin-bottom: .5rem;
+}
+#bigWaterString{
+	height: 3rem;
 }
 #entryPage{
-	position: fixed;
-	bottom: 24rem;
+	width: $maxWidth;
 }
 #bigInstructionsDiv{
 	float: left;
@@ -227,7 +296,6 @@ button{
 }
 #newEntry{
     background: none;
-    background-image: url(../Img/add-12.svg);
     height: 2rem;
     width: 2rem;
     margin: .2rem;
@@ -272,8 +340,7 @@ button{
 //    bottom: 4rem;//uncomment to return feedbackdiv
     bottom: 4rem;//
 	background: white;
-}
-#botBtnDiv{
+	margin-left: 1rem;
     .btnOutline{
 		margin-left: 1rem;
 		margin-right: 1rem;
@@ -312,7 +379,6 @@ button{
 }
 //for changing the images
     .level1{
-        background-image: url(../Img/1.svg);
         background-repeat: no-repeat;
     }
     .level2{
@@ -331,6 +397,7 @@ button{
         @include botImageHandeler ($pictureHeightWidth, $pictureMargin, $pictureBackground);
         background-repeat: no-repeat;
         background-image: url(../Img/indoor.svg);
+		margin-top: 0;
     }
     .radiantNone{
         @include botImageHandeler ($pictureHeightWidth, $pictureMargin, $pictureBackground);
