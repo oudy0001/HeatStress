@@ -2,7 +2,7 @@
 <html lang="">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href='https://fonts.googleapis.com/css?family=Cinzel|Poiret+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/styles.css">
     <script src="events/jquery2.1.overloaded.js"></script>
@@ -12,94 +12,151 @@
 
     <div id="modalBackground"></div>
 <body>
-<!--    <header class="none">-->
     <header>
-        <div id="OHCOWIconHolder" class="btnOutline">
-            <button id="OHCOWIcon"></button>
-        </div>
-        <h1 id="title">Heat Stress Calculator</h1>
+
+            <div id="OHCOWIconHolder" class="btnOutline">
+                <button id="OHCOWIcon" class="btnInline"></button>
+            </div>
+        <h1 id="title" >Heat Stress</h1>
     </header>
     <div id="OHCOWwrapper">
-        <div id="bigDisplay">
-            <div id="bigHumidexDiv">
-                <p id="humidexFeedback" class="level1">44</p>
-            </div>
-            <div id="bigInstructionsDiv">
-                <p>Temperature <span id="tempFeedback"></span><sup>o</sup>C</p>
-                <p>Humidity <span id="humidFeedback"></span>%</p>
-                <p>/*break string*/</p>
-                <p>/*water string*/</p>
-                <button id="newEntry" class="btnOutline notice"></button>
-                <div id="waterNotice" class="timeClock notice"></div>
-                <div id="breakNotice" class="waterBottle notice"></div>
-            </div>
+        
+        <div id="repeatingListPage" class="none">
+			<div id="repeatingListHolder">
+				<p>Please enter data</p>
+			</div>
         </div>
-        <div id="repeatingList">
-        </div>
-        <div id="numberPad" class="none">
-            <div class="numberPadRow">
-                <button class="btnOutline">1</button>
-                <button class="btnOutline">2</button>
-                <button class="btnOutline">3</button>
-            </div>
-            <div class="numberPadRow">
-                <button class="btnOutline">4</button>
-                <button class="btnOutline">5</button>
-                <button class="btnOutline">6</button>
-            </div>
-            <div class="numberPadRow">
-                <button class="btnOutline">7</button>
-                <button class="btnOutline">8</button>
-                <button class="btnOutline">9</button>
-            </div>
-            <div class="numberPadRow hidden">
-                <button class="btnOutline">next</button>
-                <button class="btnOutline">0</button>
-                <button class="btnOutline">done</button>
-            </div>
-        </div>
-        <div id="footerCorrect">
-<!--
-<svg x="0px" y="0px" width="40px" height="40px" viewBox="0 0 351.9 130" style="margin: auto;">
-<path d="M349.2,120c-5.5,9.6-17.8,12.8-27.3,7.3L175.9,43.1L30,127.3c-9.6,5.5-21.8,2.2-27.3-7.3c-5.5-9.6-2.2-21.8,7.3-27.3
-	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
+        <div id="entryPage" class="clearfix">
+			
+			<div id="bigDisplay" class="clearfix">
+				<div id="bigHumidexDiv">
+					<p id="humidexFeedback"></p>
+				</div>
+				<div id="bigInstructionsDiv">
+					<p id="bigBreakString"><br></p>
+					<p id="bigWaterString"><br></p>
+					<div id="breakNotice" class="timeClock notice"></div>
+					<div id="waterNotice" class="waterBottle notice"></div>
+				</div>
+			</div>
+			<div id="inputWrapper" class="clearfix">
+				<div id="temperatureWrapper">
+					<p>Temperature</p>
+					<table>
+						<tr id="addTempWrapper">
+							<td id="add10temp" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+							<td id="add1temp" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
 </svg>
--->
-<!--
-<svg version="1.1"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-	 x="0px" y="0px" width="351.9px" height="130px" viewBox="0 0 351.9 130" enable-background="new 0 0 351.9 130"
-	 xml:space="preserve">
-<defs>
-</defs>
-<path d="M349.2,120c-5.5,9.6-17.8,12.8-27.3,7.3L175.9,43.1L30,127.3c-9.6,5.5-21.8,2.2-27.3-7.3c-5.5-9.6-2.2-21.8,7.3-27.3
-	l155.9-90c3-1.7,6.2-2.6,9.5-2.7c0.2,0,0.3,0,0.5,0l0.6,0c3.2,0.1,6.5,0.9,9.5,2.7l155.9,90C351.5,98.2,354.7,110.4,349.2,120z"/>
+</td>
+						</tr>
+						<tr id="">
+							<td id="temTens">5</td>
+							<td id="temSingles">0</td>
+							<td><sup>o</sup><span id="CorF">C</span></td>
+						</tr>
+						<tr id="subTempWrapper">
+							<td id="sub10temp" class="inputAddSub sub">
+								<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
 </svg>
--->
-
-
+							</td>
+							<td id="sub1temp" class="inputAddSub sub">
+							<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="humidityWrapper">
+					<p>Humidity</p>
+					<table>
+						<tr id="addHumWrapper">
+							<td id="add10hum" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+							<td id="add1hum" class="inputAddSub add">
+<svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.9,397.7L488.9,397.7c-18,20.4-49.7,20.4-67.7,0L283.8,241.4c-18-20.4-49.7-20.4-67.7,0L78.8,397.7
+	c-18,20.4-49.7,20.4-67.7,0l0,0c-14.8-17-14.8-42.4,0-59.4l205-233.3c18-20.4,49.7-20.4,67.7,0l205,233.3
+	C503.7,355.3,503.7,380.9,488.9,397.7z"/>
+</svg></td>
+						</tr>
+						<tr>
+							<td id="humTens">1</td>
+							<td id="humSingles">0</td>
+							<td><sup><!--this is done to keep the heights the same--></sup>%</td>
+						</tr>
+						<tr id="subHumWrapper">
+							<td id="sub10hum" class="inputAddSub sub"><svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg></td>
+							<td id="sub1hum" class="inputAddSub sub"><svg version="1.1" x="0px" y="0px"
+	 viewBox="0 89.7 500 323.3" style="enable-background:new 0 89.7 500 323.3;" xml:space="preserve">
+<path d="M488.8,164.4l-205,233.3c-18,20.4-49.7,20.4-67.7,0l-205-233.3c-14.8-17-14.8-42.4,0-59.4l0,0c18-20.4,49.7-20.4,67.7,0
+	l137.3,156.3c18,20.4,49.7,20.4,67.7,0L421.1,105c18-20.4,49.7-20.4,67.7,0l0,0C503.6,121.8,503.6,147.4,488.8,164.4z"/>
+</svg></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
         </div>
-    </div>
-        <footer>
-            <div id="shadeBoxFooter"></div>
+		<footer>
+                    <div id="newEntryOutline" class="none">
+                        <button id="newEntry" class="btnInline notice"></button>
+                    </div>
             <div id="botBtnDiv">
                 <div class="btnOutline">
-                    <button id="indoorOutdoor" class="indoor"></button>
+                    <div class="btnInline">
+                        <button id="indoorOutdoor" class="indoor"></button>
+                    </div>
                 </div>
                 <div class="btnOutline">
-                    <button id="clothingLevel" class="clothing">0</button>
+                    <div class="btnInline">
+                        <button id="clothingLevel" class="clothing">0</button>
+                    </div>
                 </div>
                 <div class="btnOutline">
-                    <button id="radiantLevel" class="radiantNone">0</button>
+                    <div class="btnInline">
+                        <button id="radiantLevel" class="radiantNone">0</button>
+                    </div>
                 </div>
                 <div class="btnOutline">
-                    <button id="acclimatization" class="unacclimatized"></button>
+                    <div class="btnInline">
+                        <button id="acclimatization" class="unacclimatized"></button>
+                    </div>
                 </div>
             </div>
-            <div id="feedbackHolder">
-                <p id="feedbackText">feedback
-                <button id="resetBtn" class="btnOutline"></button></p>
-            </div>
-        </footer>
+                <p id="feedbackText">
+					<span id="outputText">feedback</span>
+                    <span class="btnOutline">
+                        <button id="resetBtn" class="btnInline"></button>
+                </span>
+                </p>
+			</footer>
+    </div>
 </body>
 </html>
