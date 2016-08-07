@@ -111,8 +111,8 @@ p, h3, input {
     font-family: 'Poiret One', cursive;
     text-align: center; }
   #inputWrapper .inputAddSub {
-    width: 1.5rem;
-    height: .5rem;
+    width: 2rem;
+    height: 1rem;
     margin: 0;
     padding: 0;
     background: none; }
@@ -320,6 +320,7 @@ button {
   width: 2rem; }
 
 .level1 {
+  background-image: url(../Img/1.svg);
   background-repeat: no-repeat; }
 
 .level2 {

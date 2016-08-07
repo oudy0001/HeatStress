@@ -145,8 +145,8 @@ $inputWrapperMargin: 0;
 		text-align: center;
 	}
 	.inputAddSub{
-		width: 1.5rem;
-		height: .5rem;
+		width: 2rem;
+		height: 1rem;
 		margin: 0;
 		padding: 0;
 		background: $pictureBackground;
@@ -379,6 +379,7 @@ button{
 }
 //for changing the images
     .level1{
+        background-image: url(../Img/1.svg);
         background-repeat: no-repeat;
     }
     .level2{
