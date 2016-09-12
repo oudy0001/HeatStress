@@ -3,13 +3,15 @@ var HSAppByOHCOW = {
         indoorBool: true,
         clothingLevel: 0,
         radiantLevel: 0,
-        acclimatized: false
+        acclimatized: false,
+        infoPageNumber: 0
     },
     currentStatus: {
         indoorBool: true,
         clothingLevel: 0,
         radiantLevel: 0,
-        acclimatized: false
+        acclimatized: false,
+        infoPageNumber: 0
     },
 	calculatorInput:{
 		temperature: 25,
@@ -33,56 +35,92 @@ var HSAppByOHCOW = {
     settings: {
       celsius: true
     },
+  changePage: function(arrayOfPages, forwardBool, feedbackText){
+    var displayPage;
+    arrayOfPages[this.currentStatus.infoPageNumber].setAttribute("class", "infoPage none");
+    if(forwardBool){
+      nextPage = ++this.currentStatus.infoPageNumber;
+      if(nextPage >= arrayOfPages.length){
+        displayPage = arrayOfPages.length - 1;
+      }else {
+        displayPage = nextPage;
+      }
+    }else{
+      nextPage = --this.currentStatus.infoPageNumber;
+      if(nextPage <= 0){
+        displayPage = 0;
+      }else {
+        displayPage = nextPage;
+      }
+    }
+    arrayOfPages[displayPage].setAttribute("class", "infoPage");
+    this.currentStatus.infoPageNumber = displayPage;
+    feedbackText.textContent = (displayPage + 1);
+  },
+  showHideInfoPage: function(infoPage, infoFooter, appPage, appFooter){
+    if(infoPage.getAttribute("class") == "clearfix none"){
+      infoPage.setAttribute("class", "clearfix");
+      infoFooter.setAttribute("class", "clearfix");
+      appPage.setAttribute("class", "clearfix none");
+      appFooter.setAttribute("class", "clearfix none");
+    }else {
+      infoPage.setAttribute("class", "clearfix none");
+      infoFooter.setAttribute("class", "clearfix none");
+      appPage.setAttribute("class", "clearfix");
+      appFooter.setAttribute("class", "clearfix");
+    }
+
+  },
 	tryChangeInputs: function(tempChange, humChange){
 		var tempTopLimit = 50;
 		var tempBotLimit = 14;
 		var humTopLimit = 100;
 		var humBotLimit = 0;
-		var newTemp = (tempChange + HSAppByOHCOW.calculatorInput.temperature);
-		var newHum = (humChange + HSAppByOHCOW.calculatorInput.humidity);
+		var newTemp = (tempChange + this.calculatorInput.temperature);
+		var newHum = (humChange + this.calculatorInput.humidity);
 		if(newTemp > tempBotLimit && newTemp < tempTopLimit){
-			HSAppByOHCOW.calculatorInput.temperature = newTemp;
+			this.calculatorInput.temperature = newTemp;
 		}else if(newTemp <= tempBotLimit){
-			HSAppByOHCOW.calculatorInput.temperature = tempBotLimit;
+			this.calculatorInput.temperature = tempBotLimit;
 		}else if(newTemp >= tempTopLimit){
-			HSAppByOHCOW.calculatorInput.temperature = tempTopLimit;
+			this.calculatorInput.temperature = tempTopLimit;
 		}
 		if(newHum > humBotLimit && newHum < humTopLimit){
-			HSAppByOHCOW.calculatorInput.humidity = newHum;
+			this.calculatorInput.humidity = newHum;
 		}else if(newHum <= humBotLimit){
-			HSAppByOHCOW.calculatorInput.humidity = humBotLimit;
+			this.calculatorInput.humidity = humBotLimit;
 		}else if(newHum >= humTopLimit){
-			HSAppByOHCOW.calculatorInput.humidity = humTopLimit;
+			this.calculatorInput.humidity = humTopLimit;
 		}
 	},
 	renderCalculatorInputs: function(inputPage){
 		//changing numbers
-		if(HSAppByOHCOW.settings.celsius == true){
-			var newTemp10 = parseInt(HSAppByOHCOW.calculatorInput.temperature/10);
+		if(this.settings.celsius == true){
+			var newTemp10 = parseInt(this.calculatorInput.temperature/10);
 			inputPage.temp10.innerHTML = newTemp10;
-			inputPage.temp1.innerHTML = HSAppByOHCOW.calculatorInput.temperature - (newTemp10 * 10);
-			var newHum10 = parseInt(HSAppByOHCOW.calculatorInput.humidity/10);
+			inputPage.temp1.innerHTML = this.calculatorInput.temperature - (newTemp10 * 10);
+			var newHum10 = parseInt(this.calculatorInput.humidity/10);
 			if(newHum10 != 0){
 				inputPage.hum10.innerHTML = newHum10;
 			}else{
 				inputPage.hum10.innerHTML = '';
 			}
-			inputPage.hum1.innerHTML = HSAppByOHCOW.calculatorInput.humidity - (newHum10 * 10);
+			inputPage.hum1.innerHTML = this.calculatorInput.humidity - (newHum10 * 10);
 		}else{
 			//ferinheight
 		}
         //updating clothing level
-        // inputPage.clothing.innerHTML = HSAppByOHCOW.currentStatus.clothingLevel;
-        // inputPage.radiant.innerHTML = HSAppByOHCOW.currentStatus.radiantLevel;
-		
+        // inputPage.clothing.innerHTML = this.currentStatus.clothingLevel;
+        // inputPage.radiant.innerHTML = this.currentStatus.radiantLevel;
+
 		//interperting and updating
-		var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.calculatorInput.temperature, HSAppByOHCOW.calculatorInput.humidity, inputPage.radiant, inputPage.clothing);
+		var humidex = this.calculateHumidex(this.calculatorInput.temperature, this.calculatorInput.humidity, inputPage.radiant, inputPage.clothing);
 		inputPage.humidexFeedback.innerHTML = Math.round(humidex);
 		var acclimatizedBool = inputPage.acclimatized.getAttribute("class") == "acclimatized" ? true : false;
-		var interperted = HSAppByOHCOW.interpert(humidex, acclimatizedBool);
+		var interperted = this.interpert(humidex, acclimatizedBool);
 		inputPage.humidexFeedback.setAttribute('class', ('level' + interperted.color));
-		inputPage.bigBreakString.innerHTML = HSAppByOHCOW.breakStrings[interperted.breakStrings];
-		inputPage.bigWaterString.innerHTML = HSAppByOHCOW.waterStrings[interperted.waterNumber];
+		inputPage.bigBreakString.innerHTML = this.breakStrings[interperted.breakStrings];
+		inputPage.bigWaterString.innerHTML = this.waterStrings[interperted.waterNumber];
 		if(interperted.breakStrings > 2){
 			inputPage.breakNotice.setAttribute('class', 'timeClock notice');
 		}else{
@@ -100,9 +138,9 @@ var HSAppByOHCOW = {
 			acclimatizationBool = (accl.getAttribute('class') == "acclimatized");
 			acclimatizationBool = (accl.getAttribute('class') == "acclimatized");
             HSRepeatingListHolder.innerHTML = null;
-        for(var i = (HSAppByOHCOW.listOfEntries.length - 1); i > -1; i--){
-			var humidex = HSAppByOHCOW.calculateHumidex(HSAppByOHCOW.listOfEntries[i].temp, HSAppByOHCOW.listOfEntries[i].humd, radiantLevel, clothingLevel);
-            var translateObject = HSAppByOHCOW.interpert(humidex, acclimatizationBool);
+        for(var i = (this.listOfEntries.length - 1); i > -1; i--){
+			var humidex = this.calculateHumidex(this.listOfEntries[i].temp, this.listOfEntries[i].humd, radiantLevel, clothingLevel);
+            var translateObject = this.interpert(humidex, acclimatizationBool);
             var container = document.createElement("div");
             container.setAttribute("class", "repeatingListItem");
             //icon
@@ -114,9 +152,9 @@ var HSAppByOHCOW = {
             stringHolder.setAttribute("class", "repRight");
             //strings
             var waterString = document.createElement("p");
-            waterString.innerHTML = HSAppByOHCOW.shortWaterStrings[translateObject.waterNumber];
+            waterString.innerHTML = this.shortWaterStrings[translateObject.waterNumber];
             var breakString = document.createElement("p");
-            breakString.innerHTML = HSAppByOHCOW.shortBreakStrings[translateObject.breakStrings];
+            breakString.innerHTML = this.shortBreakStrings[translateObject.breakStrings];
             stringHolder.appendChild(breakString);
             stringHolder.appendChild(waterString);
             container.appendChild(iconHolder);
@@ -137,8 +175,8 @@ var HSAppByOHCOW = {
     },
 
 //MODLES
-    //TODO celcius to ferinheight converter
-	
+    //TODO celcius to ferinheight converter maybe?
+
 	//moving no longer needed
     moveToTemp: function(tempFeedback, humidFeedback){
 			humidFeedback.setAttribute("class", "");
@@ -152,7 +190,7 @@ var HSAppByOHCOW = {
 			humidFeedback.value = "";
 			humidFeedback.focus();
 	},
-	//new number no longer needed
+	//new number, no longer needed
 	handleInput: function(input, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized, confirmBtn){
 		var newTemperature = tempFeedback.value + input;
 		var newHumidity = humidFeedback.value + input;
@@ -163,13 +201,13 @@ var HSAppByOHCOW = {
 			tempFeedback.setAttribute("class", "");
 			humidFeedback.blur();
 			tempFeedback.blur();
-			var humidex = HSAppByOHCOW.calculateHumidex(tempFeedback.value, humidFeedback.value, radiant, clothing);
+			var humidex = this.calculateHumidex(tempFeedback.value, humidFeedback.value, radiant, clothing);
 			humidexFeedback.innerHTML = Math.round(humidex);
 			var acclimatizedBool = acclimatized.getAttribute("class") == "acclimatized" ? true : false;
-			var interperted = HSAppByOHCOW.interpert(humidex, acclimatizedBool);
+			var interperted = this.interpert(humidex, acclimatizedBool);
 			humidexFeedback.setAttribute('class', ('level' + interperted.color));
-			bigBreakString.innerHTML = HSAppByOHCOW.breakStrings[interperted.breakStrings];
-			bigWaterString.innerHTML = HSAppByOHCOW.waterStrings[interperted.waterNumber];
+			bigBreakString.innerHTML = this.breakStrings[interperted.breakStrings];
+			bigWaterString.innerHTML = this.waterStrings[interperted.waterNumber];
 			confirmBtn.innerHTML = 'done';
 		}
 		//
@@ -181,7 +219,7 @@ var HSAppByOHCOW = {
 			}
 //			if(humidFeedback.value == ''){
 			if(tempFeedback.value.length > 1 && humidFeedback.value == ''){
-				HSAppByOHCOW.moveToHumid(tempFeedback, humidFeedback);
+				this.moveToHumid(tempFeedback, humidFeedback);
 			}else if(humidFeedback.value != '' && tempFeedback.value.length > 1){
 				finishInput();
 			}
@@ -190,14 +228,14 @@ var HSAppByOHCOW = {
 				humidFeedback.value = newHumidity;
 			}
 			if(humidFeedback.value.length > 1 && tempFeedback.value == '' && humidFeedback.value != 10){
-				HSAppByOHCOW.moveToTemp(tempFeedback, humidexFeedback);
+				this.moveToTemp(tempFeedback, humidexFeedback);
 			}else if(humidFeedback.value.length > 1 && tempFeedback.value != '' && humidFeedback.value != 10){
 				finishInput();
 			}
 		}
 
 	},
-	
+
 	//toggle new input page, no longer needed
 	toggleNewEntry: function(numberPad, newEntryButton, repeatingList, tempFeedback){
         if(numberPad.getAttribute("class") == "none"){
@@ -212,7 +250,7 @@ var HSAppByOHCOW = {
 			tempFeedback.setAttribute("class", "");
         }
 	},
-	
+
     //Number inputs old input
     handleKeypad: function(key, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized,  confirmBtn, numberPad, repeatingList, newEntry){
         //TODO if we use icons instead of next and done we would need to change this (probably by adding some attribue)
@@ -234,24 +272,24 @@ var HSAppByOHCOW = {
 					tempFeedback.setAttribute("class", "editing");
 //					alert("nothing editing");
 				};
-//				var input = 
-				HSAppByOHCOW.handleInput(key.textContent, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized, confirmBtn);
+//				var input =
+				this.handleInput(key.textContent, tempFeedback, humidFeedback, humidexFeedback, bigBreakString, bigWaterString, radiant, clothing, acclimatized, confirmBtn);
                 break;
             case "next":
                 break;
             case "done":
 				var newItem = {temp: parseInt(tempFeedback.value), humd: parseInt(humidFeedback.value)};
-				HSAppByOHCOW.listOfEntries.push(newItem);
+				this.listOfEntries.push(newItem);
 				console.log('pushed');
             case "back":
-				HSAppByOHCOW.renderList(repeatingList, acclimatized, radiant, clothing);
-				HSAppByOHCOW.toggleNewEntry(numberPad, newEntry, repeatingList, tempFeedback);
+				this.renderList(repeatingList, acclimatized, radiant, clothing);
+				this.toggleNewEntry(numberPad, newEntry, repeatingList, tempFeedback);
                 break;
             default:
                 break;
         };
     },
-    
+
     //humidex
     calculateHumidex: function (temperature, humidity, radiant, clothing){
 		temperature = parseInt(temperature);
@@ -267,9 +305,14 @@ var HSAppByOHCOW = {
         };
 
         //calculation
-        return temperature+5/9*((6.112 * (Math.pow(10,(7.5*temperature/(237.7+temperature))))*humidity/100)-10)+radiant*1.9*0.3+clothing*1.9;
+        var calculatedHumidex = temperature+5/9*((6.112 * (Math.pow(10,(7.5*temperature/(237.7+temperature))))*humidity/100)-10)+radiant*1.9*0.3+clothing*1.9;
+        if(calculatedHumidex < temperature){
+          return temperature;
+        }else {
+          return calculatedHumidex;
+        }
     },
-    
+
     //interpertation of humidex
     breakStrings : [
             "No Heat Stress", //0
@@ -299,7 +342,7 @@ var HSAppByOHCOW = {
             "45min/h Heat Break", //5
             "STOP!!", //6
             "error" //7
-    ],   
+    ],
 
     shortWaterStrings: [
             "Normal Water", //1
@@ -312,7 +355,7 @@ var HSAppByOHCOW = {
 		"Shorts and T-Shirt",
 		"Pants and T-Shirt",
 		"Jeans and Long Sleeves",
-		"Thick Overalls"
+		"Airtight Clothing"
 	],
 
     //separated from the calculation of the humidex because it is not a calculation
@@ -330,27 +373,27 @@ var HSAppByOHCOW = {
                     breakStrings: 0,
                     waterNumber: 0
                 };
-            } 
+            }
             else if(humidex<39.5)
             {
                 return {
-                    color: 2, 
-                    breakStrings: 1, 
+                    color: 2,
+                    breakStrings: 1,
                     waterNumber: 1
                 };
             }
             else if(humidex<42.5)
             {
                 return {
-                    color: 2, 
-                    breakStrings: 2, 
+                    color: 2,
+                    breakStrings: 2,
                     waterNumber: 2
                 };
             }
             else if(humidex<44.5)
             {
                 return {
-                    color: 3, 
+                    color: 3,
                     breakStrings: 3,
                     waterNumber: 3
                 };
@@ -358,8 +401,8 @@ var HSAppByOHCOW = {
             else
             {
                 return {
-                    color: 4, 
-                    breakStrings: 6, 
+                    color: 4,
+                    breakStrings: 6,
                     waterNumber: 4
                 };
             }
@@ -367,8 +410,8 @@ var HSAppByOHCOW = {
             if(humidex<29.5)
             {
                 return {
-                    color: 1, 
-                    breakStrings: 0, 
+                    color: 1,
+                    breakStrings: 0,
                     waterNumber: 0
                 };
             }
@@ -425,9 +468,12 @@ var HSAppByOHCOW = {
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-//    mapFunction();
-        HSWrapper = document.getElementById("OHCOWwrapper"),
-        //big icon and feedback
+    //icon and pages
+      HSWrapper = document.getElementById("OHCOWwrapper"),
+        HSEntryPage = document.getElementById("entryPage"),
+        HSInfoPages = document.getElementById("informationPages"),
+        HSOHCOWIcon = document.getElementById("OHCOWIcon"),
+    //big icon and feedback
         HSBigHumidex = document.getElementById("humidexFeedback"),
         HSBigTemperature = document.getElementById("bigTemperature"),
         HSTempFeedback = document.getElementById("tempFeedback"),
@@ -439,14 +485,14 @@ document.addEventListener("DOMContentLoaded", function(){
         HSbreakNotice = document.getElementById("breakNotice"),//
         HSHumidFeeback = document.getElementById("humidFeedback"),
         HSNewEntry = document.getElementById("newEntryOutline"),
-		//temperature pieces
+		//temperature input
         HSadd10temp = document.getElementById("add10temp"),
         HSadd1temp = document.getElementById("add1temp"),
         HStemTens = document.getElementById("temTens"),
         HStemSingles = document.getElementById("temSingles"),
         HSsub10temp = document.getElementById("sub10temp"),
         HSsub1temp = document.getElementById("sub1temp"),
-		//humidity pieces
+		//humidity input
         HSadd10hum = document.getElementById("add10hum"),
         HSadd1hum = document.getElementById("add1hum"),
         HSsub10hum = document.getElementById("sub10hum"),
@@ -455,14 +501,34 @@ document.addEventListener("DOMContentLoaded", function(){
         HShumSingles = document.getElementById("humSingles"),
         HSRepeatingListPage = document.getElementById("repeatingListPage"),
         HSRepeatingListHolder = document.getElementById("repeatingListHolder"),
-        //bottom
+    //entry footer
+        HSEntryFooter = document.getElementById("entryFooter"),
         HSIndoorOutdoor = document.getElementById("indoorOutdoor"),
         HSClothingLevel = document.getElementById("clothingLevel"),
         HSRadiantLevel = document.getElementById("radiantLevel"),
         HSAccl = document.getElementById("acclimatization"),
         HSoutputText = document.getElementById("outputText"),
-        HSResetBtn = document.getElementById("resetBtn")
+        HSResetBtn = document.getElementById("resetBtn"),
+    //info pages
+        HSInfoPageArray = HSInfoPages.querySelectorAll(".infoPage"),
+    //info footer
+        HSInfoFooter = document.getElementById("infoFooter"),
+        HSInfoLeft = document.getElementById("infoLeft"),
+        HSInfoRight = document.getElementById("infoRight"),
+        HSInfoPageNumber = document.getElementById("pageNumber")
         ;
+  //triggers displays either entry page or information pages (including footers)
+  HSOHCOWIcon.addEventListener("click", function(){
+    HSAppByOHCOW.showHideInfoPage(HSInfoPages, HSInfoFooter, HSEntryPage, HSEntryFooter);
+  });
+  //moves page left or right
+    HSInfoLeft.addEventListener("click", function(){
+      HSAppByOHCOW.changePage(document.querySelectorAll(".infoPage"), false, HSInfoPageNumber);
+    });
+    HSInfoRight.addEventListener("click", function(){
+      HSAppByOHCOW.changePage(document.querySelectorAll(".infoPage"), true, HSInfoPageNumber);
+    })
+
 	//old calculator entry
     HSNewEntry.addEventListener("click", function(){
 		HSAppByOHCOW.toggleNewEntry(HSNumberPad, HSNewEntry, HSRepeatingListPage, HSTempFeedback)}
@@ -538,7 +604,7 @@ document.addEventListener("DOMContentLoaded", function(){
     //bottom buttons
     HSIndoorOutdoor.addEventListener("click", function(){
         alert("Automatic Outdoor List Coming Soon!");
-		
+
     })
     HSClothingLevel.addEventListener("click", function(){
         if(HSAppByOHCOW.currentStatus.clothingLevel == 3){
@@ -570,7 +636,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		inputPage.clothing = HSClothingLevel.textContent;
 		inputPage.acclimatized = HSAccl;
 		HSAppByOHCOW.renderCalculatorInputs(inputPage);
- 		HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
+ 	// 	HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);//list not used right now
 		if(HSAppByOHCOW.currentStatus.radiantLevel == 0){
 			HSoutputText.textContent = 'No Radiant Heat';
 		}else if(HSAppByOHCOW.currentStatus.radiantLevel >= 1 && HSAppByOHCOW.currentStatus.radiantLevel <= 3){
@@ -603,28 +669,28 @@ document.addEventListener("DOMContentLoaded", function(){
     });
     //reset button on bottom
     HSResetBtn.addEventListener("click", function(){
-        
+
         HSAppByOHCOW.currentStatus.clothingLevel = 0;
         inputPage.clothing = 0;
         HSClothingLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
-        
+
         HSRadiantLevel.setAttribute("class", "radiantNone");
         HSAppByOHCOW.currentStatus.radiantLevel = 0;
         inputPage.radiant = 0;
         HSRadiantLevel.textContent = HSAppByOHCOW.currentStatus.clothingLevel;
-        
+
         HSAppByOHCOW.currentStatus.acclimatized = false;
         HSAccl.setAttribute("class", "unacclimatized");
-		
+
 		HSAppByOHCOW.calculatorInput.temperature = 25;
 		HSAppByOHCOW.calculatorInput.humidity = 50;
-		
+
 		// inputPage.radiant = HSRadiantLevel.textContent;
 		// inputPage.clothing = HSClothingLevel.textContent;
 		inputPage.acclimatized = HSAccl;
 		HSAppByOHCOW.renderCalculatorInputs(inputPage);
     })
-    
+
  		// HSAppByOHCOW.renderList(HSRepeatingListPage, HSAccl, HSRadiantLevel.textContent, HSClothingLevel.textContent);
 	HSAppByOHCOW.renderCalculatorInputs(inputPage);
 });
