@@ -365,15 +365,15 @@ button{
     margin: 0;
     padding: 0;
 }
-#botBtnDiv{
-    position: fixed;
+#botBtnDiv {
+  position: fixed;
 //    bottom: 4rem;//uncomment to return feedbackdiv
-    bottom: 4rem;//
-	background: white;
-	margin-left: 1rem;
-    .btnOutline{
-		margin-left: 1rem;
-		margin-right: 1rem;
+  bottom: 4rem;
+  background: white;
+  margin-left: 3rem; }
+  #botBtnDiv .btnOutline {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
         float: left;
         width: $numberPadBtnHW + 2*$numberPadBtnMargin;
         height: $numberPadBtnHW + 2*$numberPadBtnMargin;

@@ -503,7 +503,7 @@ document.addEventListener("DOMContentLoaded", function(){
         HSRepeatingListHolder = document.getElementById("repeatingListHolder"),
     //entry footer
         HSEntryFooter = document.getElementById("entryFooter"),
-        HSIndoorOutdoor = document.getElementById("indoorOutdoor"),
+        // HSIndoorOutdoor = document.getElementById("indoorOutdoor"),
         HSClothingLevel = document.getElementById("clothingLevel"),
         HSRadiantLevel = document.getElementById("radiantLevel"),
         HSAccl = document.getElementById("acclimatization"),
@@ -602,10 +602,10 @@ document.addEventListener("DOMContentLoaded", function(){
 //        HSAppByOHCOW.handleInput('', HSTempFeedback, HSHumidFeeback, HSBigHumidex, HSBigBreakString, HSBigWaterString, HSRadiantLevel.innerHTML, HSClothingLevel.innerHTML, acclimatizedBool, HSConfirmBtn, HSNumberPad, HSRepeatingListHolder);
 //	});
     //bottom buttons
-    HSIndoorOutdoor.addEventListener("click", function(){
-        alert("Automatic Outdoor List Possible In The Future.");
-
-    })
+    // HSIndoorOutdoor.addEventListener("click", function(){
+    //     alert("Automatic Outdoor List Possible In The Future.");
+    //
+    // })
     HSClothingLevel.addEventListener("click", function(){
         if(HSAppByOHCOW.currentStatus.clothingLevel == 3){
             HSAppByOHCOW.currentStatus.clothingLevel = 0;
