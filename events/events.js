@@ -603,7 +603,7 @@ document.addEventListener("DOMContentLoaded", function(){
 //	});
     //bottom buttons
     HSIndoorOutdoor.addEventListener("click", function(){
-        alert("Automatic Outdoor List Coming Soon!");
+        alert("Automatic Outdoor List Possible In The Future.");
 
     })
     HSClothingLevel.addEventListener("click", function(){
